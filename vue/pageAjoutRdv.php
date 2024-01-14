@@ -33,7 +33,7 @@
           </select>
         </input-field>
         <input class="btn btn-primary" type="submit" value="Enregistrer">
-        <a href="index.php" class="btn btn-seconday">Annuler</a>
+        <a href="../index.php" class="btn btn-seconday">Annuler</a>
       </form>
     </div>
   </div>

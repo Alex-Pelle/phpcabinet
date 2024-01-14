@@ -8,13 +8,13 @@
 </head>
 <body>
   <?php
-    require('header.html');
+    require('vue/header.html');
   ?>
-  <a href='rdv.php'><h2>Liste des rendez-vous</h2></a>
-  <a href='usagers.php'><h2>Liste des usagers</h2></a>
-  <a href='medecins.php'><h2>Liste des medecins</h2></a>
+  <a href='controlleur/rdv.php'><h2>Liste des rendez-vous</h2></a>
+  <a href='controlleur/usagers.php'><h2>Liste des usagers</h2></a>
+  <a href='controlleur/medecins.php'><h2>Liste des medecins</h2></a>
   <?php
-    include('footer.html');
+    include('vue/footer.html');
   ?>
 </body>
 </html>

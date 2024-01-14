@@ -34,7 +34,7 @@
           </label>
         </input-field>
         <input class="btn btn-primary" type="submit" value="Enregistrer">
-        <a href="medecins.php" class="btn btn-seconday">Annuler</a>
+        <a href="../controlleur/medecins.php" class="btn btn-seconday">Annuler</a>
       </form>
     </div>
   </div>

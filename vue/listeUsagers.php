@@ -17,7 +17,7 @@
       //TODO renvoyer des div avec la classe medecin
     ?>
   </div>
-  <a href="pageAjoutUsager.php"><p>Ajouter</p></a>
+  <a href="../vue/pageAjoutUsager.php"><p>Ajouter</p></a>
   <?php
     require('footer.html');
   ?>

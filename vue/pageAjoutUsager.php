@@ -65,7 +65,7 @@
         </div>
         </input-field>
         <input class="btn btn-primary" type="submit" value="Enregistrer">
-        <a href="usagers.php" class="btn btn-seconday">Annuler</a>
+        <a href="../controlleur/usagers.php" class="btn btn-seconday">Annuler</a>
       </form>
     </div>
   </div>

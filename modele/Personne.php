@@ -7,9 +7,8 @@ class Personne {
     private String $prenom;
     private Civilite $civilite;
 
-    public function __construct(int $idPersonne,String $nom, String $prenom, Civilite $civilite) {
+    public function __construct(String $nom, String $prenom, Civilite $civilite) {
         if (!empty($nom)||!empty($prenom)||!empty($civilite)) {
-            $this->idPersonne=$idPersonne;
             $this->nom=$nom;
             $this->prenom=$prenom;
             $this->civilite=$civilite;

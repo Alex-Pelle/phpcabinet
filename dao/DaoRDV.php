@@ -2,7 +2,11 @@
 
 class DaoRDV implements Dao {
 
-    private final Connexion $connexion = Connexion::getInstance();
+    private Connexion $connexion;
+
+    public function __construct(Connexion $c) {
+        $this->connexion=$c;
+    }
 
 function getAll() {
     $pdo = $this->connexion->getPDO();

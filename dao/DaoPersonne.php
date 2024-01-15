@@ -1,8 +1,14 @@
 <?php
-
+require('Dao.php');
+require('Connexion.php');
 class DaoPersonne implements Dao {
 
-    private final Connexion $connexion = Connexion::getInstance();
+    private Connexion $connexion;
+
+    public function __construct(Connexion $c) {
+        $this->connexion=$c;
+    }
+    
 
 function getAll() {
     $pdo = $this->connexion->getPDO();
@@ -29,20 +35,30 @@ function getById($cle) {
     $pdo = $this->connexion->getPDO();
     $getById = $pdo->query("SELECT * FROM Personne WHERE idPersonne = $cle");
     $sortie = $getById->fetch(PDO::FETCH_ASSOC);
-    return $sortie;
+    $personne = null;
+    if ($sortie['fonction']==Fonction::M->name) {
+        $personne = new Medecin(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::M);
+        $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
+    }
+    if ($sortie['fonction']==Fonction::U->name) {
+        $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$this->getById($sortie['idMedecin']),$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+        $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
+    }
+    return $personne;
 }
+
 
 function insert($item) {
     $pdo = $this->connexion->getPDO();
     $insert = $pdo->prepare('INSERT INTO 
         Personne(fonction,nomPersonne,prenomPersonne,civilite,Adresse,code_postal,ville,numero_securite,idMedecin) 
             VALUES
-            (:fonction,:nomPersonne,:prenomPeronne,:civilite,:Adresse,:code_postal,:ville,:numero_securite,:idMedecin)'
+            (:fonction,:nomPersonne,:prenomPersonne,:civilite,:Adresse,:code_postal,:ville,:numero_securite,:idMedecin)'
     );
 
     if($item instanceof Medecin) {
         $insert->execute(array(
-            'fonction' => 'M',
+            'fonction' => $item->getFonction()->name,
             'nomPersonne' => $item->getPersonne()->getNom(),
             'prenomPersonne' => $item->getPersonne()->getPrenom(),
             'civilite' => $item->getPersonne()->getCivilite()->name,
@@ -56,7 +72,7 @@ function insert($item) {
 
     if($item instanceof Usager) {
         $insert->execute(array(
-            'fonction' => 'U',
+            'fonction' => $item->getFonction()->name,
             'nomPersonne' => $item->getPersonne()->getNom(),
             'prenomPersonne' => $item->getPersonne()->getPrenom(),
             'civilite' => $item->getPersonne()->getCivilite()->name,
@@ -67,6 +83,8 @@ function insert($item) {
             'idMedecin' => $item->getMedecinReferant()->getPersonne()->getIdPersonne()
         ));
     }
+
+    
    
 
 }
@@ -77,7 +95,7 @@ function update($item) {
     $civilite = $item->getPersonne()->getCivilite()->name;
 
     $pdo = $this->connexion->getPDO();
-    $insert = $pdo->prepare('UPDATE Personne SET
+    $update = $pdo->prepare('UPDATE Personne SET
         nomPersonne = :nomPersonne ,
         prenomPersonne = :prenomPersonne ,
         civilite =  :civilite ,
@@ -88,17 +106,17 @@ function update($item) {
         idMedecin = :idMedecin
         WHERE idPersonne = :idPersonne ');
 
-    $insert->bindParam(':nomPersonne',$nom , PDO::PARAM_STR);
-    $insert->bindParam(':prenomPersonne',$prenom ,PDO::PARAM_STR);
-    $insert->bindParam(':civilite',$civilite,PDO::PARAM_STR);
+    $update->bindParam(':nomPersonne',$nom , PDO::PARAM_STR);
+    $update->bindParam(':prenomPersonne',$prenom ,PDO::PARAM_STR);
+    $update->bindParam(':civilite',$civilite,PDO::PARAM_STR);
 
     if($item instanceof Medecin) {
         $null=NULL;
-        $insert->bindParam(':adresse',$null , PDO::PARAM_STR);
-        $insert->bindParam(':code_postal',$null ,PDO::PARAM_STR);
-        $insert->bindParam(':ville',$null,PDO::PARAM_STR);
-        $insert->bindParam(':numero_securite',$null , PDO::PARAM_STR);
-        $insert->bindParam(':idMedecin',$null ,PDO::PARAM_INT);
+        $update->bindParam(':adresse',$null , PDO::PARAM_STR);
+        $update->bindParam(':code_postal',$null ,PDO::PARAM_STR);
+        $update->bindParam(':ville',$null,PDO::PARAM_STR);
+        $update->bindParam(':numero_securite',$null , PDO::PARAM_STR);
+        $update->bindParam(':idMedecin',$null ,PDO::PARAM_INT);
     }
 
     if($item instanceof Usager) {
@@ -108,17 +126,21 @@ function update($item) {
         $numero_securite = $item->getNumero_securite();
         $idMedecin = $item->getPersonne()->getIdPersonne();
 
-        $insert->bindParam(':adresse',$adresse , PDO::PARAM_STR);
-        $insert->bindParam(':code_postal',$code_postal ,PDO::PARAM_STR);
-        $insert->bindParam(':ville',$ville,PDO::PARAM_STR);
-        $insert->bindParam(':numero_securite',$numero_securite , PDO::PARAM_STR);
-        $insert->bindParam(':idMedecin',$idMedecin ,PDO::PARAM_INT);
+        $update->bindParam(':adresse',$adresse , PDO::PARAM_STR);
+        $update->bindParam(':code_postal',$code_postal ,PDO::PARAM_STR);
+        $update->bindParam(':ville',$ville,PDO::PARAM_STR);
+        $update->bindParam(':numero_securite',$numero_securite , PDO::PARAM_STR);
+        $update->bindParam(':idMedecin',$idMedecin ,PDO::PARAM_INT);
     }
 
-    $insert->execute();
+    $update->execute();
 }
-function delete($item) {
+function delete($cle) {
 
+    $pdo = $this->connexion->getPDO();
+    $delete = $pdo->prepare('DELETE FROM Personne WHERE idPersonne = :idPersonne');
+    $delete->bindParam(':idPersonne',$cle,PDO::PARAM_INT);
+    $delete->execute();
 }
 
 }

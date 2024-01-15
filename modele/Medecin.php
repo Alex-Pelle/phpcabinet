@@ -2,9 +2,11 @@
 
 class Medecin {
     private Personne $personne;
-    public function __construct(Personne $personne) {
-        if (!empty($personne)) {
+	private Fonction $fonction;
+    public function __construct(Personne $personne, Fonction $fonction) {
+        if (!empty($personne) && !empty($fonction)) {
             $this->personne = $personne;
+			$this->fonction = $fonction;
         } else {
             throw new ErrorException("Champ invalide");
         }
@@ -12,6 +14,12 @@ class Medecin {
     }
 
   
+	/**
+	 * @return Fonction
+	 */
+	public function getFonction(): Fonction {
+		return $this->fonction;
+	}
 
 	/**
 	 * @return Personne

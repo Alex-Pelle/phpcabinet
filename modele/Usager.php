@@ -10,14 +10,17 @@ class Usager {
     private String $code_postal;
     private String $ville;
     private String $adresse;
+	private Fonction $fonction;
     private Personne $personne;
 	private Medecin $medecinReferent;
 
 
-    public function __construct(Personne $personne, String $numero_securite, String $code_postal, String $ville, String $adresse){
-        if (!empty($personne) && !empty($numero_securite) && !empty($code_postal) && !empty($ville) && !empty($adresse) && $personne instanceof Personne){
+    public function __construct(Personne $personne,Fonction $fonction, Medecin $medecinReferent, String $numero_securite, String $code_postal, String $ville, String $adresse){
+        if (empty($fonction) || empty($medecinReferent) || empty($personne) || empty($numero_securite) || empty($code_postal) || empty($ville) || empty($adresse)){
             throw new ErrorException("Champ invalide");
         } else {
+			$this->fonction=$fonction;
+			$this->medecinReferent=$medecinReferent;
             $this->numero_securite=$numero_securite;
             $this->code_postal=$code_postal;
             $this->ville=$ville;
@@ -26,6 +29,13 @@ class Usager {
         }
         
     }
+
+	/**
+	 * @return Fonction
+	 */
+	public function getFonction(): Fonction {
+		return $this->fonction;
+	}
     
 
 

@@ -74,9 +74,12 @@ class RendezVous {
 	/**
 	 * @return DateTime
 	 */
-	public function getDateHeureDebut() {
-		return $this->dateHeureDebut;
+	public function getDateDebut() {
+		return new DateTime($this->dateHeureDebut->format("d m Y"));
+	}
 
+	public function getHeureDebut() {
+		return new DateTime($this->dateHeureDebut->format("H:i:s"));
 	}
 	
 	/**

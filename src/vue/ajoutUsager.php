@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <title>Nouvel usager</title>
 </head>
 <body>
@@ -16,9 +16,6 @@
       <form action="AjouterUsager.php" method="post">
         <input-field>
         <legend>Identité de l'usager:</legend>
-          <div class="form-group">
-            <label for="estMedecin"> Ce patient est-il aussi un médecin de cette clinique : <input type="checkbox" name="estMedecin" id="estMedecin"></label>
-          </div>        
           <div class="form-group">
             <label for="nom">Nom : <input type="text" name="nom" id="nom"></label>
           </div>
@@ -59,7 +56,9 @@
           <select name="medecin_referent" id="medecin_referent">
             <option value="">Pas de médecin référent</option>
             <?php
-            //TODO liste des médecins dans des champs options, value="Id", texte = Nom prénom du médecin SAUF lui-même si il est aussi médecin
+            foreach($medecins as $medecin) {
+              echo '<option value="'.$medecin->getPersonne()->getIdPersonne().'">Dr. '.$medecin->getPersonne()->getPrenom().' '.$medecin->getPersonne()->getNom().'</option>';
+            }
             ?>
           </select>
         </div>

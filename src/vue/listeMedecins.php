@@ -3,20 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Médecins</title>
+  <title>Medecins</title>
 </head>
 <body>
   <?php
     require('header.html');
   ?>
   <h1>
-    Liste des Médecins du cabinet
+    Liste des medecins du cabinet
   </h1>
-  <div id="liste">
+  <ul id="liste">
     <?php
-      //TODO renvoyer des div avec la classe medecin
+      foreach($medecins as $medecin) {
     ?>
-  </div>
+      <li class="medecin"><?= $medecin->getPersonne()->getNom()?></li>
+    <?php }?>
+    </ul>
   <a href="../vue/pageAjoutMedecin.php"><p>Ajouter</p></a>
   <?php
     require('footer.html');

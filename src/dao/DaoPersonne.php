@@ -77,17 +77,19 @@ function getById($cle) {
     $getById = $pdo->query("SELECT * FROM Personne WHERE idPersonne = $cle");
     $sortie = $getById->fetch(PDO::FETCH_ASSOC);
     $personne = null;
-    if ($sortie['fonction']==Fonction::M->name) {
-        $personne = new Medecin(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::M);
-        $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
-    }
-    if ($sortie['fonction']==Fonction::U->name) {
-        $idMedecin=null;
-        if ($sortie['idMedecin']!=null) {
-          $idMedecin = $this->getById($sortie['idMedecin']);  
-        } 
-        $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
-        $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
+    if ($sortie != false) {
+      if ($sortie['fonction']==Fonction::M->name) {
+          $personne = new Medecin(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::M);
+          $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
+      }
+      if ($sortie['fonction']==Fonction::U->name) {
+          $idMedecin=null;
+          if ($sortie['idMedecin']!=null) {
+            $idMedecin = $this->getById($sortie['idMedecin']);  
+          } 
+          $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+          $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
+      }
     }
     return $personne;
 }
@@ -168,24 +170,19 @@ function update($item) {
     }
 
     if($item instanceof Usager) {
-        $idMedecin=null;
-        try{
-            $idMedecin = $item
-            ->getMedecinReferant()
-            ->getPersonne()
-            ->getIdPersonne();
-        } catch (Exception $e) {echo $e->getMessage();}finally {
-            $adresse = $item->getAdresse();
-            $code_postal = $item->getCode_postal();
-            $ville = $item->getVille();
-            $numero_securite = $item->getNumero_securite();
-            $update->bindParam(':adresse',$adresse , PDO::PARAM_STR);
-            $update->bindParam(':code_postal',$code_postal ,PDO::PARAM_STR);
-            $update->bindParam(':ville',$ville,PDO::PARAM_STR);
-            $update->bindParam(':numero_securite',$numero_securite , PDO::PARAM_STR);
-            $update->bindParam(':idMedecin',$idMedecin ,PDO::PARAM_INT);
+        $idMedecin=$item->getMedecinReferant();
+        if (isset($idMedecin)) {
+            $idMedecin = $item->getMedecinReferant()->getPersonne()->getIdPersonne();
         }
-        
+        $adresse = $item->getAdresse();
+        $code_postal = $item->getCode_postal();
+        $ville = $item->getVille();
+        $numero_securite = $item->getNumero_securite();
+        $update->bindParam(':adresse',$adresse , PDO::PARAM_STR);
+        $update->bindParam(':code_postal',$code_postal ,PDO::PARAM_STR);
+        $update->bindParam(':ville',$ville,PDO::PARAM_STR);
+        $update->bindParam(':numero_securite',$numero_securite , PDO::PARAM_STR);
+        $update->bindParam(':idMedecin',$idMedecin ,PDO::PARAM_INT);
     }
 
     $update->execute();

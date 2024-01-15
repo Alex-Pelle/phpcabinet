@@ -14,17 +14,14 @@ CREATE TABLE Personne (
   numero_securite CHAR(13) NULL,
   idMedecin INT NULL,
 	PRIMARY KEY(idPersonne),
-  FOREIGN KEY(idMedecin) REFERENCES Personne(idPersonne),
-  CONSTRAINT Personne_civilite_valide CHECK (civilite in ('M','F')),
-  CONSTRAINT Personne_role CHECK (fonction in ('U','M','D'))
-);
+  FOREIGN KEY(idMedecin) REFERENCES Personne(idPersonne)
+)
 CREATE TABLE rendez_vous (
 	idUsager INT NOT NULL,
   idMedecin INT NOT NULL,
   date_rendez_vous DATE NOT NULL,
   heure_rendez_vous TIME NOT NULL,
   duree_minute INT DEFAULT 30,
-  CONSTRAINT rendez_vous_usager_medecin CHECK (idUsager <> idMedecin),
   PRIMARY KEY(idUsager,idMedecin,date_rendez_vous,heure_rendez_vous),
   FOREIGN KEY (idUsager) REFERENCES personne(idPersonne),
   FOREIGN KEY (idMedecin) REFERENCES personne(idPersonne)

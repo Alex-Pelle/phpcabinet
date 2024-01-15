@@ -12,11 +12,13 @@
   <h1>
     Liste des usagers du cabinet
   </h1>
-  <div id="liste">
+  <ul id="liste">
     <?php
-      //TODO renvoyer des div avec la classe medecin
+      foreach($usagers as $usager) {
     ?>
-  </div>
+      <li class="usager"><?php $usager->getNom()?></li>
+    <?php }?>
+    </ul>
   <a href="../vue/pageAjoutUsager.php"><p>Ajouter</p></a>
   <?php
     require('footer.html');

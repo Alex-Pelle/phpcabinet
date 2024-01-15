@@ -1,6 +1,4 @@
-/*DATABASE*/
-CREATE DATABASE Cabinet;
-USE Cabinet;
+
 /*TABLES*/
 CREATE TABLE Personne (
   idPersonne int NOT NULL AUTO_INCREMENT,
@@ -15,7 +13,7 @@ CREATE TABLE Personne (
   idMedecin INT NULL,
 	PRIMARY KEY(idPersonne),
   FOREIGN KEY(idMedecin) REFERENCES Personne(idPersonne)
-)
+);
 CREATE TABLE rendez_vous (
 	idUsager INT NOT NULL,
   idMedecin INT NOT NULL,
@@ -23,6 +21,6 @@ CREATE TABLE rendez_vous (
   heure_rendez_vous TIME NOT NULL,
   duree_minute INT DEFAULT 30,
   PRIMARY KEY(idUsager,idMedecin,date_rendez_vous,heure_rendez_vous),
-  FOREIGN KEY (idUsager) REFERENCES personne(idPersonne),
-  FOREIGN KEY (idMedecin) REFERENCES personne(idPersonne)
+  FOREIGN KEY(idUsager) REFERENCES Personne(idPersonne),
+  FOREIGN KEY(idMedecin) REFERENCES Personne(idPersonne)
 );

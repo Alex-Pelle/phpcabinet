@@ -7,7 +7,7 @@ class Connexion {
 
     private function __construct() {
         try {
-            $this->linkpdo = new PDO("mysql:host=localhost;dbname=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "moi");
+            $this->linkpdo = new PDO("mysql:host=db_project;dbname=cabinet", "default",'iutinfo');
             }
         catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());

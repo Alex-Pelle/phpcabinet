@@ -1,6 +1,6 @@
 <?php
-require('Dao.php');
-require('Connexion.php');
+require_once(__DIR__.'/Dao.php');
+require_once(__DIR__.'/Connexion.php');
 class DaoPersonne implements Dao {
 
     private Connexion $connexion;

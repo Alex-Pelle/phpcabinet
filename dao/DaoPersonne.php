@@ -14,21 +14,48 @@ function getAll() {
     $pdo = $this->connexion->getPDO();
     $getAll = $pdo->query('SELECT * FROM Personne');
     $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
-    return $tableauSortie;
+    $retour = array();
+    foreach ($tableauSortie as $cle => $sortie) {
+        $personne = null;
+        if ($sortie['fonction']==Fonction::M->name) {
+            $personne = new Medecin(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::M);
+            $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
+        }
+        if ($sortie['fonction']==Fonction::U->name) {
+            $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$this->getById($sortie['idMedecin']),$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+            $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
+        }
+        array_push($retour,$personne);
+    }
+    return $retour;
 }
 
 function getAllUsagers() {
     $pdo = $this->connexion->getPDO();
     $getAll = $pdo->query('SELECT * FROM Personne WHERE fonction != "M"');
     $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
-    return $tableauSortie;
+    $retour = array();
+    foreach ($tableauSortie as $cle => $sortie) {
+        $personne = null;
+         $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$this->getById($sortie['idMedecin']),$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+        $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
+        array_push($retour,$personne);
+    }
+    return $retour;
 }
 
 function getAllMedecins() {
     $pdo = $this->connexion->getPDO();
     $getAll = $pdo->query('SELECT * FROM Personne WHERE fonction != "U"');
     $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
-    return $tableauSortie;
+    $retour = array();
+    foreach ($tableauSortie as $cle => $sortie) {
+        $personne = null;
+        $personne = new Medecin(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::M);
+        $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
+        array_push($retour,$personne);
+    }
+    return $retour;
 }
 
 function getById($cle) {
@@ -83,17 +110,9 @@ function insert($item) {
             'idMedecin' => $item->getMedecinReferant()->getPersonne()->getIdPersonne()
         ));
     }
-
-    
-   
-
 }
 
 function update($item) {
-    $nom = $item->getPersonne()->getNom();
-    $prenom = $item->getPersonne()->getPrenom();
-    $civilite = $item->getPersonne()->getCivilite()->name;
-
     $pdo = $this->connexion->getPDO();
     $update = $pdo->prepare('UPDATE Personne SET
         nomPersonne = :nomPersonne ,
@@ -104,8 +123,14 @@ function update($item) {
         ville = :ville ,
         numero_securite = :numero_securite,
         idMedecin = :idMedecin
-        WHERE idPersonne = :idPersonne ');
-
+        WHERE idPersonne = :idPersonne '
+    );
+    $personne = $item->getPersonne();
+    $nom = $personne->getNom();
+    $prenom = $item->getPersonne()->getPrenom();
+    $civilite = $item->getPersonne()->getCivilite()->name;
+    $id = $item->getPersonne()->getIdPersonne();
+    $update->bindParam(':idPersonne',$id , PDO::PARAM_INT);
     $update->bindParam(':nomPersonne',$nom , PDO::PARAM_STR);
     $update->bindParam(':prenomPersonne',$prenom ,PDO::PARAM_STR);
     $update->bindParam(':civilite',$civilite,PDO::PARAM_STR);

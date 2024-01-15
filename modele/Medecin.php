@@ -36,6 +36,7 @@ class Medecin {
 		$this->personne = $personne;
 		return $this;
 	}
+	
 }
 
 ?>

@@ -191,7 +191,7 @@ function delete($cle) {
     if($this->getById($cle) instanceof Medecin) {
         $array = $this->getAllUsagerByMedecin($cle);
         foreach ($array as $cle => $valeur) {
-            $valeur->getMedecinReferant()->getPersonne()->setIdPersonne(null);
+            $valeur->setMedecinReferant(null);
             $this->update($valeur);
         }
     }

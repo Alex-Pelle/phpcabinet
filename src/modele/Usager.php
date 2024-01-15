@@ -126,6 +126,15 @@ class Usager {
 	public function getMedecinReferant(): ?Medecin {
 		return $this->medecinReferent;
 	}
+
+  /**
+	 * @param ?Medecin $medecin 
+	 * @return self
+	 */
+	public function setMedecinReferant(?Medecin $medecin): self {
+		$this->medecinReferent = $medecin;
+		return $this;
+	}
 }
 
 ?>

@@ -20,9 +20,12 @@ function getAll() {
         if ($sortie['fonction']==Fonction::M->name) {
             $personne = new Medecin(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::M);
             $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
-        }
-        if ($sortie['fonction']==Fonction::U->name) {
-            $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$this->getById($sortie['idMedecin']),$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+        } elseif ($sortie['fonction']==Fonction::U->name) {
+            $idMedecin=null;
+            if ($sortie['idMedecin']!=null) {
+                $idMedecin = $this->getById($sortie['idMedecin']);  
+            } 
+            $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
             $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
         }
         array_push($retour,$personne);
@@ -37,7 +40,11 @@ function getAllUsagers() {
     $retour = array();
     foreach ($tableauSortie as $cle => $sortie) {
         $personne = null;
-         $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$this->getById($sortie['idMedecin']),$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+        $idMedecin=null;
+        if ($sortie['idMedecin']!=null) {
+          $idMedecin = $this->getById($sortie['idMedecin']);  
+        } 
+        $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
         $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
         array_push($retour,$personne);
     }
@@ -50,7 +57,6 @@ function getAllMedecins() {
     $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
     $retour = array();
     foreach ($tableauSortie as $cle => $sortie) {
-        $personne = null;
         $personne = new Medecin(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::M);
         $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
         array_push($retour,$personne);
@@ -68,7 +74,11 @@ function getById($cle) {
         $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
     }
     if ($sortie['fonction']==Fonction::U->name) {
-        $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$this->getById($sortie['idMedecin']),$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+        $idMedecin=null;
+        if ($sortie['idMedecin']!=null) {
+          $idMedecin = $this->getById($sortie['idMedecin']);  
+        } 
+        $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
         $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
     }
     return $personne;
@@ -98,6 +108,10 @@ function insert($item) {
     }
 
     if($item instanceof Usager) {
+        $idMedecin=null;
+        if ($item->getMedecinReferant()!=null) {
+          $idMedecin = $item->getMedecinReferant()->getPersonne()->getIdPersonne();  
+        } 
         $insert->execute(array(
             'fonction' => $item->getFonction()->name,
             'nomPersonne' => $item->getPersonne()->getNom(),
@@ -107,8 +121,9 @@ function insert($item) {
             'code_postal' => $item->getCode_postal(),
             'ville' => $item->getVille(),
             'numero_securite' => $item->getNumero_securite(),
-            'idMedecin' => $item->getMedecinReferant()->getPersonne()->getIdPersonne()
+            'idMedecin' => $idMedecin
         ));
+
     }
 }
 
@@ -145,27 +160,53 @@ function update($item) {
     }
 
     if($item instanceof Usager) {
-        $adresse = $item->getAdresse();
-        $code_postal = $item->getCode_postal();
-        $ville = $item->getVille();
-        $numero_securite = $item->getNumero_securite();
-        $idMedecin = $item->getPersonne()->getIdPersonne();
-
-        $update->bindParam(':adresse',$adresse , PDO::PARAM_STR);
-        $update->bindParam(':code_postal',$code_postal ,PDO::PARAM_STR);
-        $update->bindParam(':ville',$ville,PDO::PARAM_STR);
-        $update->bindParam(':numero_securite',$numero_securite , PDO::PARAM_STR);
-        $update->bindParam(':idMedecin',$idMedecin ,PDO::PARAM_INT);
+        $idMedecin=null;
+        try{
+            $idMedecin = $item
+            ->getMedecinReferant()
+            ->getPersonne()
+            ->getIdPersonne();
+        } catch (Exception $e) {echo $e->getMessage();}finally {
+            $adresse = $item->getAdresse();
+            $code_postal = $item->getCode_postal();
+            $ville = $item->getVille();
+            $numero_securite = $item->getNumero_securite();
+            $update->bindParam(':adresse',$adresse , PDO::PARAM_STR);
+            $update->bindParam(':code_postal',$code_postal ,PDO::PARAM_STR);
+            $update->bindParam(':ville',$ville,PDO::PARAM_STR);
+            $update->bindParam(':numero_securite',$numero_securite , PDO::PARAM_STR);
+            $update->bindParam(':idMedecin',$idMedecin ,PDO::PARAM_INT);
+        }
+        
     }
 
     $update->execute();
 }
 function delete($cle) {
-
+    if($this->getById($cle) instanceof Medecin) {
+        $array = $this->getAllUsagerByMedecin($cle);
+        foreach ($array as $cle => $valeur) {
+            $valeur->getMedecinReferant()->getPersonne()->setIdPersonne(null);
+            $this->update($valeur);
+        }
+    }
     $pdo = $this->connexion->getPDO();
     $delete = $pdo->prepare('DELETE FROM Personne WHERE idPersonne = :idPersonne');
     $delete->bindParam(':idPersonne',$cle,PDO::PARAM_INT);
     $delete->execute();
+}
+
+function getAllUsagerByMedecin($cle) {
+    $pdo = $this->connexion->getPDO();
+    $getAll = $pdo->query("SELECT * FROM Personne WHERE idMedecin = $cle");
+    $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
+    $retour = array();
+    foreach ($tableauSortie as $cle => $sortie) {
+        $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$this->getById($sortie['idMedecin']),$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+        $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
+        array_push($retour,$personne);
+    }
+    return $retour;
 }
 
 }

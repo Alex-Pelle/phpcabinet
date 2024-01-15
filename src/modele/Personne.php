@@ -2,7 +2,7 @@
 
 
 class Personne {
-    private int $idPersonne;
+    private ?int $idPersonne;
     private String $nom;
     private String $prenom;
     private Civilite $civilite;
@@ -31,7 +31,7 @@ class Personne {
 	 * @param int $idPersonne 
 	 * @return self
 	 */
-	public function setIdPersonne(int $idPersonne): self {
+	public function setIdPersonne(?int $idPersonne): self {
 		$this->idPersonne = $idPersonne;
 		return $this;
 	}

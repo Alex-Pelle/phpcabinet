@@ -12,11 +12,11 @@ class Usager {
     private String $adresse;
 	private Fonction $fonction;
     private Personne $personne;
-	private Medecin $medecinReferent;
+	private ?Medecin $medecinReferent;
 
 
-    public function __construct(Personne $personne,Fonction $fonction, Medecin $medecinReferent, String $numero_securite, String $code_postal, String $ville, String $adresse){
-        if (empty($fonction) || empty($medecinReferent) || empty($personne) || empty($numero_securite) || empty($code_postal) || empty($ville) || empty($adresse)){
+    public function __construct(Personne $personne,Fonction $fonction, ?Medecin $medecinReferent, String $numero_securite, String $code_postal, String $ville, String $adresse){
+        if (empty($fonction) || empty($personne) || empty($numero_securite) || empty($code_postal) || empty($ville) || empty($adresse)){
             throw new ErrorException("Champ invalide");
         } else {
 			$this->fonction=$fonction;
@@ -121,9 +121,9 @@ class Usager {
 	}
 
 	/**
-	 * @return Medecin
+	 * @return ?Medecin
 	 */
-	public function getMedecinReferant(): Medecin {
+	public function getMedecinReferant(): ?Medecin {
 		return $this->medecinReferent;
 	}
 }

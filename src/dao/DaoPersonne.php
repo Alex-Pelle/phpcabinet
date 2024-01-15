@@ -1,6 +1,14 @@
 <?php
 require_once(__DIR__.'/Dao.php');
 require_once(__DIR__.'/Connexion.php');
+require_once(__DIR__.'/../modele/Fonction.php');
+require_once(__DIR__.'/../modele/Personne.php');
+require_once(__DIR__.'/../modele/Usager.php');
+require_once(__DIR__.'/../modele/Medecin.php');
+require_once(__DIR__.'/../modele/Civilite.php');
+
+
+
 class DaoPersonne implements Dao {
 
     private Connexion $connexion;

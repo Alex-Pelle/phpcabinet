@@ -16,7 +16,7 @@
     <?php
       foreach($usagers as $usager) {
     ?>
-      <li class="usager"><?php $usager->getNom()?></li>
+      <li class="usager"><?= $usager->getPersonne()->getNom()?></li>
     <?php }?>
     </ul>
   <a href="../vue/pageAjoutUsager.php"><p>Ajouter</p></a>

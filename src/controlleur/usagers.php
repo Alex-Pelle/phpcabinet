@@ -9,6 +9,5 @@ require_once(__DIR__.'/usagers.php');
 function liste() {
   $dao = new DAOPersonne(Connexion::getInstance());
   $usagers = $dao->getAll();
-  echo 'test';
   require(__DIR__.'/../vue/listeUsagers.php');
 }

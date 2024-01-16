@@ -22,6 +22,20 @@ class ControlleurUsager {
     $medecins = $dao->getAllMedecins();
     require(__DIR__.'/../vue/ajoutUsager.php');
   }
+  static function detail($id) {
+    $dao = new DAOPersonne(Connexion::getInstance());
+    $usager = $dao->getById($id);
+    $nom = $usager->getPersonne()->getNom();
+    $prenom = $usager->getPersonne()->getPrenom();
+    $civilite = $usager->getPersonne()->getCivilite() == Civilite::H ? 'Homme' : 'Femme';
+    $securite = $usager->getNumero_securite();
+    $adresse = $usager->getAdresse();
+    $cp = $usager->getCode_postal();
+    $ville = $usager->getVille();
+    $medecin = $usager->getMedecinReferant();
+    $medecins = $dao->getAllMedecins();
+    require(__DIR__.'/../vue/detailUsager.php');
+  }
   static function modif($id) {
     $dao = new DAOPersonne(Connexion::getInstance());
     $usager = $dao->getById($id);
@@ -52,6 +66,24 @@ class ControlleurUsager {
       throw new ErrorException('Bad values');
     }
     $dao->insert($usager);
+    header('Location: /index.php?action=usagers',true);
+  }
+  public static function update($input) {
+    $dao = new DaoPersonne(COnnexion::getInstance());
+    try {
+      $usager = new Usager(
+        new Personne($input['nom'], $input['prenom'], Civilite::valueOf($input['civilite'])), 
+        ($input['medecin_referent'] != '') ? $dao->getById($input['medecin_referent']): null, 
+        $input['numero_securite'], 
+        $input['code_postal'], 
+        $input['ville'], 
+        $input['adresse']);
+      $usager->getPersonne()->setIdPersonne($input['id']);
+    }
+    catch (Exception $e) {
+      throw new ErrorException('Bad values');
+    }
+    $dao->update($usager);
     header('Location: /index.php?action=usagers',true);
   }
 }

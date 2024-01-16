@@ -15,7 +15,8 @@
   <ul id="liste">
     <?php
       foreach($usagers as $usager) {
-      echo '<li class="usager" id="'.$usager->getPersonne()->getIdPersonne().'">'.$usager->getPersonne()->getNom().'</li>';
+        $id = $usager->getPersonne()->getIdPersonne();
+      echo '<a href="/index.php?action=detailUsager&id='.$id.'"><li class="usager" id="'.$id.'">'.$usager->getPersonne()->getNom().'</li></a>';
     }?>
   </ul>
   <a href="/index.php?action=ajoutUsager"><p>Ajouter</p></a>

@@ -26,14 +26,14 @@ function getAll() {
     foreach ($tableauSortie as $cle => $sortie) {
         $personne = null;
         if ($sortie['fonction']==Fonction::M->name) {
-            $personne = new Medecin(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::M);
+            $personne = new Medecin(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])));
             $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
         } elseif ($sortie['fonction']==Fonction::U->name) {
             $idMedecin=null;
             if ($sortie['idMedecin']!=null) {
                 $idMedecin = $this->getById($sortie['idMedecin']);  
             } 
-            $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+            $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
             $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
         }
         array_push($retour,$personne);
@@ -52,7 +52,7 @@ function getAllUsagers() {
         if ($sortie['idMedecin']!=null) {
           $idMedecin = $this->getById($sortie['idMedecin']);  
         } 
-        $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+        $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
         $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
         array_push($retour,$personne);
     }
@@ -65,7 +65,7 @@ function getAllMedecins() {
     $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
     $retour = array();
     foreach ($tableauSortie as $cle => $sortie) {
-        $personne = new Medecin(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::M);
+        $personne = new Medecin(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])));
         $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
         array_push($retour,$personne);
     }
@@ -79,7 +79,7 @@ function getById($cle) {
     $personne = null;
     if ($sortie != false) {
       if ($sortie['fonction']==Fonction::M->name) {
-          $personne = new Medecin(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::M);
+          $personne = new Medecin(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])));
           $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
       }
       if ($sortie['fonction']==Fonction::U->name) {
@@ -87,7 +87,7 @@ function getById($cle) {
           if ($sortie['idMedecin']!=null) {
             $idMedecin = $this->getById($sortie['idMedecin']);  
           } 
-          $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+          $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
           $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
       }
     }
@@ -105,7 +105,7 @@ function insert($item) {
 
     if($item instanceof Medecin) {
         $insert->execute(array(
-            'fonction' => $item->getFonction()->name,
+            'fonction' => Fonction::M->name,
             'nomPersonne' => $item->getPersonne()->getNom(),
             'prenomPersonne' => $item->getPersonne()->getPrenom(),
             'civilite' => $item->getPersonne()->getCivilite()->name,
@@ -123,7 +123,7 @@ function insert($item) {
           $idMedecin = $item->getMedecinReferant()->getPersonne()->getIdPersonne();  
         } 
         $insert->execute(array(
-            'fonction' => $item->getFonction()->name,
+            'fonction' => Fonction::M->name,
             'nomPersonne' => $item->getPersonne()->getNom(),
             'prenomPersonne' => $item->getPersonne()->getPrenom(),
             'civilite' => $item->getPersonne()->getCivilite()->name,
@@ -207,7 +207,7 @@ function getAllUsagerByMedecin($cle) {
     $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
     $retour = array();
     foreach ($tableauSortie as $cle => $sortie) {
-        $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),Fonction::U,$this->getById($sortie['idMedecin']),$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+        $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),$this->getById($sortie['idMedecin']),$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
         $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
         array_push($retour,$personne);
     }

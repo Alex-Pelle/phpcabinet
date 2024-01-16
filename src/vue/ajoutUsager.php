@@ -13,7 +13,7 @@
   <div class="container">
     <h1>Ajouter un nouvel usager</h1>
     <div class="container">
-      <form action="AjouterUsager.php" method="post">
+      <form action="/index.php?action=addUsager" method="post">
         <input-field>
         <legend>Identité de l'usager:</legend>
           <div class="form-group">
@@ -28,11 +28,11 @@
         </input-field>
         <input-field class="form-group">
           <legend>Civilité de l'usager: </legend>
-            <input type="radio" name="civilite" id="civiliteM" value="M">
+            <input type="radio" name="civilite" id="civiliteM" value="H">
           <label for="civiliteM">
             M
           </label>
-            <input type="radio" name="civilite" id="civiliteMme" value="Mme">
+            <input type="radio" name="civilite" id="civiliteMme" value="F">
           <label for="civiliteMme">
             Mme
           </label>
@@ -64,7 +64,7 @@
         </div>
         </input-field>
         <input class="btn btn-primary" type="submit" value="Enregistrer">
-        <a href="../controlleur/usagers.php" class="btn btn-seconday">Annuler</a>
+        <a href="index.php?action=usagers" class="btn btn-seconday">Annuler</a>
       </form>
     </div>
   </div>

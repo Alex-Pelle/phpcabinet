@@ -123,7 +123,7 @@ function insert($item) {
           $idMedecin = $item->getMedecinReferant()->getPersonne()->getIdPersonne();  
         } 
         $insert->execute(array(
-            'fonction' => Fonction::M->name,
+            'fonction' => Fonction::U->name,
             'nomPersonne' => $item->getPersonne()->getNom(),
             'prenomPersonne' => $item->getPersonne()->getPrenom(),
             'civilite' => $item->getPersonne()->getCivilite()->name,

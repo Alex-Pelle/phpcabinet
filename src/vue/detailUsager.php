@@ -13,6 +13,8 @@ require_once(__DIR__.'/head.php'); ?>
       <p>Prénom: <?= $prenom?></p>
       <p>Numéro de sécurité sociale: <?= $securite?></p>
       <p>Civilité: <?= $civilite?></p>
+      <p>Date de naissance: <?= $date_naissance?></p>
+      <p>Lieu de naissance: <?= $lie_naissance?></p>
     </div>
     <div class="container">
       <h2>Adresse</h2>
@@ -27,6 +29,7 @@ require_once(__DIR__.'/head.php'); ?>
       </div>';
     }?>
     <a href="/index.php?action=modifUsager&id=<?=$id?>" class="btn btn-primary">Modifier</button>
+    <a href="/index.php?action=deleteUsager&id=<?=$id?>" class="btn btn-danger">Supprimer</button>
     <a href="/index.php?action=usagers" class="btn btn-seconday">Retour</a>
   </div>
   <?php

@@ -20,6 +20,12 @@ require_once(__DIR__.'/head.php'); ?>
           <div class="form-group">
             <label for="numero_securite">Numéro de sécurité sociale : <input type="text" name="numero_securite" id="numero_securite" value="<?= $securite?>"  ></label>
           </div>
+          <div class="form-group">
+            <label for="date_naissance">Date de naissance : <input type="date" name="date_naissance" id="date_naissance" value="<?= $date_naissance?>" ></label>
+          </div>
+          <div class="form-group">
+            <label for="lieu_naissance">Lieu de naissance : <input type="text" name="lieu_naissance" id="lieu_naissance" value="<?= $lieu_naissance?>" ></label>
+          </div>
         </input-field>
         <input-field class="form-group">
           <legend>Civilité de l'usager: </legend>
@@ -66,7 +72,7 @@ require_once(__DIR__.'/head.php'); ?>
         </div>
         </input-field>
         <input class="btn btn-primary" type="submit" value="Enregistrer">
-        <a href="/index.php?action=detailsUsager&id=<?= $id?>" class="btn btn-seconday">Annuler</a>
+        <a href="/index.php?action=detailUsager&id=<?= $id?>" class="btn btn-seconday">Annuler</a>
       </form>
     </div>
   </div>

@@ -19,6 +19,12 @@ require_once(__DIR__.'/head.php'); ?>
           <div class="form-group">
             <label for="numero_securite">Numéro de sécurité sociale : <input type="text" name="numero_securite" id="numero_securite"></label>
           </div>
+          <div class="form-group">
+            <label for="date_naissance">Date de naissance : <input type="date" name="date_naissance" id="date_naissance"></label>
+          </div>
+          <div class="form-group">
+            <label for="lieu_naissance">Lieu de naissance : <input type="text" name="lieu_naissance" id="lieu_naissance"></label>
+          </div>
         </input-field>
         <input-field class="form-group">
           <legend>Civilité de l'usager: </legend>

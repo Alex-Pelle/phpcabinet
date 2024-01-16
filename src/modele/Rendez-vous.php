@@ -74,13 +74,10 @@ class RendezVous {
 	/**
 	 * @return DateTime
 	 */
-	public function getDateDebut() {
-		return new DateTime($this->dateHeureDebut->format("d m Y"));
+	public function getDateHeureDebut() {
+		return $this->dateHeureDebut;
 	}
 
-	public function getHeureDebut() {
-		return new DateTime($this->dateHeureDebut->format("H:i:s"));
-	}
 	
 	/**
 	 * @param DateTime $dateHeureDebut
@@ -102,7 +99,7 @@ class RendezVous {
 	 * @param mixed $dureeEnMinutes 
 	 * @return self
 	 */
-	public function setDureeEnMinutes(DateTime $dureeEnMinutes): self {
+	public function setDureeEnMinutes(Duree $dureeEnMinutes): self {
 		$this->dureeEnMinutes = $dureeEnMinutes;
 		return $this;
 	}

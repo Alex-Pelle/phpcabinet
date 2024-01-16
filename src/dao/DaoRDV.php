@@ -22,7 +22,19 @@ function getById($cle) {
     $heureRDV = $cle[3];
 
     $pdo = $this->connexion->getPDO();
-    $getById = $pdo->query("SELECT * FROM rendez_vous WHERE idPersonne = $cle");
+    $getById = $pdo->prepare("SELECT * FROM rendez_vous 
+    WHERE idUsager = :idUsager AND 
+    idMedecin = :idMedecin AND 
+    date_rendez_vous = :date_rendez_vous AND 
+    heure_rendez_vous = :heure_rendez_vous ");
+
+    $getById->execute(array(
+        'idUsager' => $idUsager,
+        'idMedecin' => $idMedecin,
+        'date_rendez_vous' => $dateRDV,
+        'heure_rendez_vous' => $heureRDV
+    ));
+
     $sortie = $getById->fetch(PDO::FETCH_ASSOC);
     return $sortie;
 }
@@ -39,9 +51,9 @@ function insert($item) {
         $insert->execute(array(
             'idUsager' => $item->getUsager()->getPersonne()->getIdPersonne(),
             'idMedecin' => $item->getMedecin()->getPersonne()->getIdPersonne(),
-            'date_rendez_vous' => $item->getDateDebut(),
-            'heure_rendez_vous' => $item->getHeureDebut(),
-            'duree_minute' => $item->getDureeEnMinutes()
+            'date_rendez_vous' => $item->getDateHeureDebut()->format("Y-m-d"),
+            'heure_rendez_vous' => $item->getDateHeureDebut()->format("H:i:s"),
+            'duree_minute' => $item->getDureeEnMinutes()->getNbMinutes()
         ));
     }
 }
@@ -49,25 +61,20 @@ function insert($item) {
 function update($item) {
     if($item instanceof RendezVous) {
         $pdo = $this->connexion->getPDO();
-        $update = $pdo->prepare('UPDATE Personne SET 
+        $update = $pdo->prepare('UPDATE rendez_vous SET 
             duree_minute = :duree_minute
             WHERE idUsager = :idUsager AND 
-            idMedecin = : idMedecin AND 
-            date_rendez_vous = :date_rednez_vous AND 
+            idMedecin = :idMedecin AND 
+            date_rendez_vous = :date_rendez_vous AND 
             heure_rendez_vous = :heure_rendez_vous 
         ');
-
-   
         $update->execute(array(
             'idUsager' => $item->getUsager()->getPersonne()->getIdPersonne(),
             'idMedecin' => $item->getMedecin()->getPersonne()->getIdPersonne(),
-            'date_rendez_vous' => $item->getDateDebut(),
-            'heure_rendez_vous' => $item->getHeureDebut(),
-            'duree_minute' => $item->getDureeEnMinutes()
+            'date_rendez_vous' => $item->getDateHeureDebut()->format("Y-m-d"),
+            'heure_rendez_vous' => $item->getDateHeureDebut()->format("H:i:s"),
+            'duree_minute' => $item->getDureeEnMinutes()->getNbMinutes()
         ));
-
-
-        $update->execute();
     }
 }
 function delete($cle) {
@@ -80,8 +87,8 @@ function delete($cle) {
     $pdo = $this->connexion->getPDO();
     $delete = $pdo->prepare ('DELETE FROM rendez_vous 
         WHERE idUsager = :idUsager AND 
-        idMedecin = : idMedecin AND 
-        date_rendez_vous = :date_rednez_vous AND 
+        idMedecin = :idMedecin AND 
+        date_rendez_vous = :date_rendez_vous AND 
         heure_rendez_vous = :heure_rendez_vous 
     ');
 
@@ -94,6 +101,52 @@ function delete($cle) {
     
 }
 
+function getRendezVousByUsager($idPersonne) {
+    $pdo = $this->connexion->getPDO();
+    $getAll = $pdo->query("SELECT * FROM rendez_vous WHERE idUsager = $idPersonne");
+    $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
+    $retour = array();
+    $daoPersonne = new DaoPersonne($this->connexion);
+    foreach ($tableauSortie as $cle => $sortie) {
+        $usager = $daoPersonne->getById($sortie['idUsager']);
+        $medecin = $daoPersonne->getById($sortie['idMedecin']);
+        $dateHeure = new DateTime($sortie['date_rendez_vous'].$sortie['heure_rendez_vous']);
+        $duree = new Duree($sortie['duree_minute']); 
+        $rdv = new RendezVous($usager,$medecin,$dateHeure);
+        $rdv->setDureeEnMinutes($duree);
+        array_push($retour,$rdv);
+    }
+    return $retour;
+}
+
+function getRendezVousByMedecin($idPersonne) {
+    $pdo = $this->connexion->getPDO();
+    $getAll = $pdo->query("SELECT * FROM rendez_vous WHERE idMedecin = $idPersonne");
+    $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
+    $retour = array();
+    $daoPersonne = new DaoPersonne($this->connexion);
+    foreach ($tableauSortie as $cle => $sortie) {
+        $usager = $daoPersonne->getById($sortie['idUsager']);
+        $medecin = $daoPersonne->getById($sortie['idMedecin']);
+        $dateHeure = new DateTime($sortie['date_rendez_vous'].$sortie['heure_rendez_vous']);
+        $duree = new Duree($sortie['duree_minute']); 
+        $rdv = new RendezVous($usager,$medecin,$dateHeure);
+        $rdv->setDureeEnMinutes($duree);
+        array_push($retour,$rdv);
+    }
+    return $retour;
+}
+
+function getRendezVousByPersonne($idPersonne) {
+    $daoPersonne = new DaoPersonne($this->connexion);
+    if($daoPersonne->getById($idPersonne) instanceof Medecin) {
+        return $this->getRendezVousByMedecin($idPersonne);
+    } else if ($daoPersonne->getById($idPersonne) instanceof Usager) {
+        return $this->getRendezVousByUsager($idPersonne);
+    } else {
+        return null;
+    }
+}
 }
 
 ?>

@@ -4,7 +4,6 @@ require_once(__DIR__.'/../dao/DaoPersonne.php');
 require_once(__DIR__.'/../modele/Medecin.php');
 require_once(__DIR__.'/../modele/Usager.php');
 require_once(__DIR__.'/../modele/Personne.php');
-require_once(__DIR__.'/usagers.php');
 
 class ControlleurUsager {
   static function isUsager($id) {
@@ -70,6 +69,7 @@ class ControlleurUsager {
       throw new ErrorException('Bad values');
     }
     $dao->insert($usager);
+    $_SESSION['notification_message'] = 'Usager '.$input['nom'].' créé avec succès!';
     header('Location: /index.php?action=usagers',true);
   }
   public static function update($input) {
@@ -88,11 +88,13 @@ class ControlleurUsager {
       throw new ErrorException('Bad values');
     }
     $dao->update($usager);
+    $_SESSION['notification_message'] = 'Usager '.$input['nom'].' modifié avec succès!';
     header('Location: /index.php?action=usagers',true);
   }
   public static function delete($id) {
     $dao = new DaoPersonne(Connexion::getInstance());
     $dao->delete($id);
+    $_SESSION['notification_message'] = 'Usager supprimé avec succès!';
     header('Location: /index.php?action=usagers',true);
   }
 }

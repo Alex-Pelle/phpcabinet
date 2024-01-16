@@ -2,7 +2,7 @@
 require_once(__DIR__.'/head.php'); ?>
 <body>
   <?php
-    require('header.html');
+    require('header.php');
   ?>
   <div class="container">
     <h1>Ajouter un nouvel usager</h1>
@@ -11,10 +11,10 @@ require_once(__DIR__.'/head.php'); ?>
         <input-field>
         <legend>Identité de l'usager:</legend>
           <div class="form-group">
-            <label for="nom">Nom : <input type="text" name="nom" id="nom"></label>
+            <label for="prenom">Prénom : <input type="text" name="prenom" id="prenom"></label>
           </div>
           <div class="form-group">
-            <label for="prenom">Prénom : <input type="text" name="prenom" id="prenom"></label>
+            <label for="nom">Nom : <input type="text" name="nom" id="nom"></label>
           </div>
           <div class="form-group">
             <label for="numero_securite">Numéro de sécurité sociale : <input type="text" name="numero_securite" id="numero_securite"></label>

@@ -3,14 +3,14 @@ require_once(__DIR__.'/head.php'); ?>
 </head>
 <body>
   <?php
-    require('header.html');
+    require('header.php');
   ?>
   <div class="container">
     <h1>Détails de l'usager <?=$nom?></h1>
     <div class="container">
       <h2>Identité de l'usager:</h2>
-      <p>Nom: <?= $nom?></p>
       <p>Prénom: <?= $prenom?></p>
+      <p>Nom: <?= $nom?></p>
       <p>Numéro de sécurité sociale: <?= $securite?></p>
       <p>Civilité: <?= $civilite?></p>
       <p>Date de naissance: <?= $date_naissance?></p>

@@ -1,8 +1,8 @@
 <?php $titre = 'Usagers';
 require_once(__DIR__.'/head.php'); ?>
-<body class ="container">
+<body>
   <?php
-    require('header.html');
+    require('header.php');
   ?>
   <div class="container">
     <h1>
@@ -11,9 +11,9 @@ require_once(__DIR__.'/head.php'); ?>
     <div class="container">
       <ul id="liste" class="list-group">
         <?php
-          foreach($usagers as $usager) {
-            $id = $usager->getPersonne()->getIdPersonne();
-          echo '<a href="/index.php?action=detailUsager&id='.$id.'"><li class="usager list-group-item list-group-item-action" id="'.$id.'">'.$usager->getPersonne()->getPrenom().' '.$usager->getPersonne()->getNom().' ('.$usager->getNumero_securite().')</li></a>';
+          foreach($usagers as $medecin) {
+            $id = $medecin->getPersonne()->getIdPersonne();
+          echo '<a href="/index.php?action=detailUsager&id='.$id.'"><li class="usager list-group-item list-group-item-action" id="'.$id.'">'.$medecin->getPersonne()->getPrenom().' '.$medecin->getPersonne()->getNom().' ('.$medecin->getNumero_securite().')</li></a>';
         }?>
       </ul>
     </div>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require_once(__DIR__.'/controlleur/usagers.php');
 require_once(__DIR__.'/controlleur/medecins.php');
@@ -35,7 +36,34 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
     }
   } elseif ($_GET['action'] === 'medecins'){
     ControlleurMedecin::liste();
-  } else {
+  } elseif ($_GET['action'] === 'ajoutMedecin'){
+    ControlleurMedecin::ajout();
+  } elseif ($_GET['action'] === 'addMedecin'){
+    ControlleurMedecin::insert($_POST);
+  } elseif ($_GET['action'] === 'detailMedecin'){
+    if(isset($_GET['id']) && ControlleurMedecin::isMedecin($_GET['id'])) {
+      ControlleurMedecin::detail($_GET['id']);
+    }
+    else {
+      throw new ErrorException('Aucun ID spécifié');
+    }
+  } elseif ($_GET['action'] === 'modifMedecin'){
+    if(isset($_GET['id']) && ControlleurMedecin::isMedecin($_GET['id'])) {
+      ControlleurMedecin::modif($_GET['id']);
+    }
+    else {
+      echo "Préciser l'id de l'Medecin";
+    }
+  } elseif ($_GET['action'] === 'updateMedecin'){
+    ControlleurMedecin::update($_POST);
+  }elseif ($_GET['action'] === 'deleteMedecin'){
+    if(isset($_GET['id']) && ControlleurMedecin::isMedecin($_GET['id'])) {
+      ControlleurMedecin::delete($_GET['id']);
+    }
+    else {
+      echo "Préciser l'id de l'Medecin";
+    }
+  }else {
     echo "Erreur 404 : la page que vous recherchez n'existe pas.";
 	}
 } else {

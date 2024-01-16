@@ -19,3 +19,9 @@
     </div>
   </nav>
 </header>
+<?php
+if(isset($_SESSION['notification_message'])) {
+ echo '<p class="notification">'.$_SESSION['notification_message'].'</p>';
+}
+$_SESSION['notification_message'] = null;
+?>

@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cabinet</title>
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-</head>
+<?php $titre = 'Cabinet';
+require_once(__DIR__.'/head.php'); ?>
 <body>
   <?php
     require(__DIR__.'/header.html');

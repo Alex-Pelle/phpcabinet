@@ -15,11 +15,11 @@
   <ul id="liste">
     <?php
       foreach($usagers as $usager) {
-    ?>
-      <li class="usager"><?= $usager->getPersonne()->getNom()?></li>
-    <?php }?>
-    </ul>
-  <a href="../vue/pageAjoutUsager.php"><p>Ajouter</p></a>
+        $id = $usager->getPersonne()->getIdPersonne();
+      echo '<a href="/index.php?action=detailUsager&id='.$id.'"><li class="usager" id="'.$id.'">'.$usager->getPersonne()->getNom().'</li></a>';
+    }?>
+  </ul>
+  <a href="/index.php?action=ajoutUsager"><p>Ajouter</p></a>
   <?php
     require('footer.html');
   ?>

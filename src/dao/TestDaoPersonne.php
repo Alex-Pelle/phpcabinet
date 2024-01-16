@@ -9,14 +9,14 @@ require_once(__DIR__.'/../modele/Medecin.php');
 require_once(__DIR__.'/../modele/Civilite.php');
 $daoPersonne = new DaoPersonne(Connexion::getInstance());
 
-/*
-$medecin1 = new Medecin(new Personne("nomMedecin1","prenomMedecin2",Civilite::H),Fonction::M);
-$medecin2 = new Medecin(new Personne("nomMedecin2","prenomMedecin2",Civilite::F),Fonction::M);
+
+$medecin1 = new Medecin(new Personne("nomMedecin1","prenomMedecin2",Civilite::H));
+$medecin2 = new Medecin(new Personne("nomMedecin2","prenomMedecin2",Civilite::F));
 $daoPersonne->insert($medecin1);
 $daoPersonne->insert($medecin2);
 
-$usager1 = new Usager(new Personne("nomUsager1","prenomUsager2",Civilite::H),Fonction::U,$daoPersonne->getById(48),"xxxxxxxxxxx","82000","ville","adresse");
-$usager2 = new Usager(new Personne("nomUsager2","prenomUsager2",Civilite::F),Fonction::U,null,"xxxxxxxxxxx","23455","livve","adresse");
+$usager1 = new Usager(new Personne("nomUsager1","prenomUsager2",Civilite::H),$daoPersonne->getById(48),"xxxxxxxxxxx","82000","ville","adresse");
+$usager2 = new Usager(new Personne("nomUsager2","prenomUsager2",Civilite::F),null,"xxxxxxxxxxx","23455","livve","adresse");
 $daoPersonne->insert($usager1);
 $daoPersonne->insert($usager2);
 
@@ -40,10 +40,10 @@ echo 'get usagers<br>';
 foreach ($array as $cle => $valeur) {
     $s = $valeur->getPersonne()->getNom();
     echo "$cle : $s<br>";
-}*/
+}
 
 //test update 
-/*
+
 $usage3 = $daoPersonne->getById(54);
 $m = $usage3->getMedecinReferant();
 if (isset($m)){
@@ -59,13 +59,13 @@ foreach ($array as $cle => $valeur) {
     $s = $valeur->getPersonne()->getPrenom();
     echo "$cle : $s<br>";
 }
-*/
 
 
-// $usage4 = $daoPersonne->getById(52);
-// $usage4->getPersonne()->setIdPersonne(52);
-// echo 'delete<br>';
-// $daoPersonne->delete($usage4->getPersonne()->getIdPersonne());
+
+$usage4 = $daoPersonne->getById(52);
+$usage4->getPersonne()->setIdPersonne(52);
+echo 'delete<br>';
+$daoPersonne->delete($usage4->getPersonne()->getIdPersonne());
 $array = $daoPersonne->getAll();
 foreach ($array as $cle => $valeur) {
     $s = $valeur->getPersonne()->getPrenom();

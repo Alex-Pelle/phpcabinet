@@ -11,8 +11,8 @@
     require(__DIR__.'/header.html');
   ?>
   <a href='../controlleur/rdv.php'><h2>Liste des rendez-vous</h2></a>
-  <a href='../controlleur/usagers.php'><h2>Liste des usagers</h2></a>
-  <a href='../controlleur/medecins.php'><h2>Liste des medecins</h2></a>
+  <a href='/index.php?action=usagers'><h2>Liste des usagers</h2></a>
+  <a href='/index.php?action=medecins'><h2>Liste des medecins</h2></a>
   <?php
     require(__DIR__.'/footer.html');
   ?>

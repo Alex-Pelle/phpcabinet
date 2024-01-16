@@ -14,7 +14,13 @@ function getAll() {
     $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
     return $tableauSortie;
 }
-
+/**
+ * Le paramètre à passer est un tableau contenant dans l'orde : 
+ * idUsager (INTEGER)
+ * idMedecin (INTEGER)
+ * dateRDV (STRING) (le format à respecter est format("Y-m-d") à partir d'un objet DateTime)
+ * heureRDV (STRING) (le format à respecter est format("H:i:s") à partir d'un objet DateTime)
+ */
 function getById($cle) {
     $idUsager = $cle[0];
     $idMedecin = $cle[1];
@@ -77,6 +83,14 @@ function update($item) {
         ));
     }
 }
+
+/**
+ * Le paramètre à passer est un tableau contenant dans l'orde : 
+ * idUsager (INTEGER)
+ * idMedecin (INTEGER)
+ * dateRDV (STRING) (le format à respecter est format("Y-m-d") à partir d'un objet DateTime)
+ * heureRDV (STRING) (le format à respecter est format("H:i:s") à partir d'un objet DateTime)
+ */
 function delete($cle) {
 
     $idUsager = $cle[0];

@@ -13,7 +13,9 @@ require_once(__DIR__.'/head.php'); ?>
           <select name="usager" id="usager">
             <option value="">Veuillez choisir l'usager</option>
             <?php
-            //TODO liste des usagers sous forme de <option value="ID">PRENOM NOM</option>
+              foreach ($usagers as $usager) {
+                echo '<option value="'.$usager->getPersonne()->getIdPersonne().'">'.$usager->getPersonne()->getPrenom().' '.$usager->getPersonne()->getNom().'</option>';
+              }
             ?>
           </select>
         </input-field>
@@ -22,9 +24,22 @@ require_once(__DIR__.'/head.php'); ?>
           <select name="medecin" id="medecin">
             <option value="">Veuillez choisir le médecin</option>
             <?php
-            //TODO liste des usagers sous forme de <option value="ID">PRENOM NOM</option>
+              foreach ($medecins as $medecin) {
+                echo '<option value="'.$medecin->getPersonne()->getIdPersonne().'">'.$medecin->getPersonne()->getPrenom().' '.$medecin->getPersonne()->getNom().'</option>';
+              }
             ?>
           </select>
+        </input-field>
+        <input-field>
+          <div class="form-group">
+            <label for="date">Date : <input type="date" name="date" id="date"></label>
+          </div>
+          <div class="form-group">
+            <label for="heure">Heure : <input type="time" name="heure" id="heure"></label>
+          </div>
+          <div class="form-group">
+            <label for="duree">Durée (en minutes): <input type="number" name="duree" id="duree" value="30"></label>
+          </div>
         </input-field>
         <input class="btn btn-primary" type="submit" value="Enregistrer">
         <a href="../index.php" class="btn btn-seconday">Annuler</a>

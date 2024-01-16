@@ -10,10 +10,10 @@
           <a class="nav-link" href="/index.php?action=usagers">Usagers</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link" href="/index.php?action=medecins">Médecins</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+          <a class="nav-link" href="/index.php?action=rdvs">Rendez-vous</a>
         </li>
       </ul>
     </div>

@@ -3,6 +3,7 @@ session_start();
 
 require_once(__DIR__.'/controlleur/usagers.php');
 require_once(__DIR__.'/controlleur/medecins.php');
+require_once(__DIR__.'/controlleur/rdv.php');
 
 if (isset($_GET['action']) && $_GET['action'] !== '') {
 	if ($_GET['action'] === 'usagers') {
@@ -63,7 +64,36 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
     else {
       echo "Préciser l'id de l'Medecin";
     }
-  }else {
+  }elseif ($_GET['action'] === 'rdvs'){
+    ControlleurRdv::liste();
+  } elseif ($_GET['action'] === 'ajoutRdv'){
+    ControlleurRdv::ajout();
+  } elseif ($_GET['action'] === 'addRdv'){
+    ControlleurRdv::insert($_POST);
+  } elseif ($_GET['action'] === 'detailRdv'){
+    if(isset($_GET['id'])) {
+      ControlleurRdv::detail($_GET['id']);
+    }
+    else {
+      throw new ErrorException('Aucun ID spécifié');
+    }
+  } elseif ($_GET['action'] === 'modifRdv'){
+    if(isset($_GET['id'])) {
+      ControlleurRdv::modif($_GET['id']);
+    }
+    else {
+      echo "Préciser l'id de l'Rdv";
+    }
+  } elseif ($_GET['action'] === 'updateRdv'){
+    ControlleurRdv::update($_POST);
+  }elseif ($_GET['action'] === 'deleteRdv'){
+    if(isset($_GET['id'])) {
+      ControlleurRdv::delete($_GET['id']);
+    }
+    else {
+      echo "Préciser l'id de l'Rdv";
+    }
+  } else {
     echo "Erreur 404 : la page que vous recherchez n'existe pas.";
 	}
 } else {

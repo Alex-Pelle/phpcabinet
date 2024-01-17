@@ -230,20 +230,18 @@ function getFemmeAfter50() {
 }
 function getStatistiquesMedecins() {
     $pdo = $this->connexion->getPDO();
-    $getAll = $pdo->query("SELECT 
-    Pers.nomPersonne , 
-    Pers.prenomPersonne,
+    $getAll = $pdo->query("SELECT
+    P.nomPersonne AS NomMedecin,
+    P.prenomPersonne AS PrenomMedecin,
     (
-        SELECT SUM(RV.duree_minute)
-        FROM rendez_vous RV
-        WHERE RV.idMedecin = Pers.idPersonne
-    ) AS totalDureeRendezVous
-FROM
-    Personne Pers
-WHERE
-    Pers.fonction = 'M'
-ORDER BY
-    totalDureeRendezVous DESC");
+      SELECT SUM(R2.duree_minute)
+      FROM rendez_vous R2
+      WHERE R2.idMedecin = P.idPersonne
+        AND R2.date_rendez_vous < CURDATE()
+        AND (R2.date_rendez_vous < CURDATE() OR (R2.date_rendez_vous = CURDATE() AND R2.heure_rendez_vous < CURTIME()))
+    ) AS SommeDuree
+  FROM Personne P
+  ORDER BY SommeDuree DESC");
 $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
 return $tableauSortie;
 }

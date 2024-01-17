@@ -81,23 +81,30 @@ class DaoRDV implements Dao {
   }
 
   function update($item) {
-      if($item instanceof RendezVous) {
-          $pdo = $this->connexion->getPDO();
-          $update = $pdo->prepare('UPDATE rendez_vous SET 
-              duree_minute = :duree_minute
-              WHERE idUsager = :idUsager AND 
-              idMedecin = :idMedecin AND 
-              date_rendez_vous = :date_rendez_vous AND 
-              heure_rendez_vous = :heure_rendez_vous 
-          ');
-          $update->execute(array(
-              'idUsager' => $item->getUsager()->getPersonne()->getIdPersonne(),
-              'idMedecin' => $item->getMedecin()->getPersonne()->getIdPersonne(),
-              'date_rendez_vous' => $item->getDateHeureDebut()->format("Y-m-d"),
-              'heure_rendez_vous' => $item->getDateHeureDebut()->format("H:i:s"),
-              'duree_minute' => $item->getDureeEnMinutes()->getNbMinutes()
-          ));
-      }
+    if($item instanceof RendezVous) {
+        try {
+       
+            $pdo = $this->connexion->getPDO();
+            $update = $pdo->prepare('UPDATE rendez_vous SET 
+                duree_minute = :duree_minute
+                WHERE idUsager = :idUsager AND 
+                idMedecin = :idMedecin AND 
+                date_rendez_vous = :date_rendez_vous AND 
+                heure_rendez_vous = :heure_rendez_vous 
+            ');
+            $update->execute(array(
+                'idUsager' => $item->getUsager()->getPersonne()->getIdPersonne(),
+                'idMedecin' => $item->getMedecin()->getPersonne()->getIdPersonne(),
+                'date_rendez_vous' => $item->getDateHeureDebut()->format("Y-m-d"),
+                'heure_rendez_vous' => $item->getDateHeureDebut()->format("H:i:s"),
+                'duree_minute' => $item->getDureeEnMinutes()->getNbMinutes()
+            ));
+        
+        } catch(Exception $e) {
+        echo $e->getCode()." : ".$e->getMessage();
+        } 
+    }
+      
   }
 
   /**

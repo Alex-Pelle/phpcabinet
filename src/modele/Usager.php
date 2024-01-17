@@ -6,6 +6,8 @@
  */
 class Usager {
     
+	private DateTime $dateNaissance;
+	private String $lieuDeNaissance;
     private String $numero_securite;
     private String $code_postal;
     private String $ville;
@@ -14,8 +16,8 @@ class Usager {
 	private ?Medecin $medecinReferent;
 
 
-    public function __construct(Personne $personne, ?Medecin $medecinReferent, String $numero_securite, String $code_postal, String $ville, String $adresse){
-        if (empty($personne) || empty($numero_securite) || empty($code_postal) || empty($ville) || empty($adresse)){
+    public function __construct(Personne $personne, ?Medecin $medecinReferent, String $numero_securite, String $code_postal, String $ville, String $adresse, DateTime $dateNaissance, String $lieuDeNaissance){
+        if (empty($personne) || empty($numero_securite) || empty($code_postal) || empty($ville) || empty($adresse) || empty($dateNaissance) || empty($lieuDeNaissance)){
             throw new ErrorException("Champ invalide");
         } else {
 			$this->medecinReferent=$medecinReferent;
@@ -24,9 +26,44 @@ class Usager {
             $this->ville=$ville;
             $this->adresse = $adresse;
             $this->personne = $personne;
+			$this->dateNaissance = $dateNaissance;
+			$this->lieuDeNaissance = $lieuDeNaissance;
         }
         
     }
+
+	/**
+	 * @return string
+	 */
+	public function getLieuDeNaissance(): string {
+		return $this->lieuDeNaissance;
+	}
+	
+	/**
+	 * @param string $lieuDeNaissance 
+	 * @return self
+	 */
+	public function setLieuDeNaissance(string $lieuDeNaissance): self {
+		$this->lieuDeNaissance = $lieuDeNaissance;
+		return $this;
+	}
+
+	/**
+	 * @return DateTime
+	 */
+	public function getDateNaissance(): DateTime {
+		return $this->dateNaissance;
+	}
+	
+	/**
+	 * @param DateTime $dateNaissance
+	 * @return self
+	 */
+	public function setDateNaissance(DateTime $dateNaissance): self {
+		$this->dateNaissance = $dateNaissance;
+		return $this;
+	}
+
 
 	/**
 	 * @return string

@@ -9,8 +9,10 @@ CREATE TABLE Personne (
   Adresse VARCHAR(50) NULL,
   code_postal CHAR(5) NULL,
   ville VARCHAR(25) NULL,
-  numero_securite CHAR(13) NULL,
+  numero_securite CHAR(15) NULL,
   idMedecin INT NULL,
+  date_naissance DATE NULL,
+  lieu_de_naissance VARCHAR(50) NULL,
 	PRIMARY KEY(idPersonne),
   FOREIGN KEY(idMedecin) REFERENCES Personne(idPersonne)
 );

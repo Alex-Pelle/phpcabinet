@@ -15,8 +15,8 @@ $medecin2 = new Medecin(new Personne("nomMedecin2","prenomMedecin2",Civilite::F)
 $daoPersonne->insert($medecin1);
 $daoPersonne->insert($medecin2);
 
-$usager1 = new Usager(new Personne("nomUsager1","prenomUsager2",Civilite::H),$daoPersonne->getById(48),"xxxxxxxxxxx","82000","ville","adresse");
-$usager2 = new Usager(new Personne("nomUsager2","prenomUsager2",Civilite::F),null,"xxxxxxxxxxx","23455","livve","adresse");
+$usager1 = new Usager(new Personne("nomUsager1","prenomUsager2",Civilite::H),$daoPersonne->getById(110),"xxxxxxxxxxx","82000","ville","adresse",new DateTime("2021-10-10"),"lieux");
+$usager2 = new Usager(new Personne("nomUsager2","prenomUsager2",Civilite::F),null,"xxxxxxxxxxx","23455","livve","adresse",new DateTime("2021-10-10"),"lieux");
 $daoPersonne->insert($usager1);
 $daoPersonne->insert($usager2);
 
@@ -44,13 +44,13 @@ foreach ($array as $cle => $valeur) {
 
 //test update 
 
-$usage3 = $daoPersonne->getById(54);
+$usage3 = $daoPersonne->getById(109);
 $m = $usage3->getMedecinReferant();
 if (isset($m)){
   echo'dump';
   var_dump($usage3->getMedecinReferant());
 }
-$usage3->setMedecinReferant($daoPersonne->getById(52));
+$usage3->setMedecinReferant($daoPersonne->getById(110));
 
 $daoPersonne->update($usage3);
 $array = $daoPersonne->getAll();
@@ -61,9 +61,9 @@ foreach ($array as $cle => $valeur) {
 }
 
 
-
-$usage4 = $daoPersonne->getById(52);
-$usage4->getPersonne()->setIdPersonne(52);
+/*
+$usage4 = $daoPersonne->getById(111);
+$usage4->getPersonne()->setIdPersonne(113);
 echo 'delete<br>';
 $daoPersonne->delete($usage4->getPersonne()->getIdPersonne());
 $array = $daoPersonne->getAll();
@@ -71,6 +71,6 @@ foreach ($array as $cle => $valeur) {
     $s = $valeur->getPersonne()->getPrenom();
     echo "$cle : $s<br>";
 }
-
+*/
 
 ?>

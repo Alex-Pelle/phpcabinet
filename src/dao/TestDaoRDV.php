@@ -23,7 +23,7 @@ $usager2 = $daoPersonne->getById(54);
 $medecin2 = $daoPersonne->getById(56);
 $dateheure2 = new DateTime("2024-01-16 11:00:00");
 $rdv2 = new RendezVous($usager2,$medecin2,$dateheure2);
-$m = new Medecin(new Personne("nom","prénom,",Civilite::H),Fonction::M);
+$m = new Medecin(new Personne("nom","prénom,",Civilite::H));
 //test d'insersion 
 
 //$daoRDV->insert($rdv1);

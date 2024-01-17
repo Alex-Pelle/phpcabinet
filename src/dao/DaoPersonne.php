@@ -33,7 +33,7 @@ function getAll() {
             if ($sortie['idMedecin']!=null) {
                 $idMedecin = $this->getById($sortie['idMedecin']);  
             } 
-            $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+            $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse'],new DateTime($sortie['date_naissance']),$sortie['lieu_de_naissance']);
             $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
         }
         array_push($retour,$personne);
@@ -52,7 +52,7 @@ function getAllUsagers() {
         if ($sortie['idMedecin']!=null) {
           $idMedecin = $this->getById($sortie['idMedecin']);  
         } 
-        $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+        $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse'],new DateTime($sortie['date_naissance']),$sortie['lieu_de_naissance']);
         $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
         array_push($retour,$personne);
     }
@@ -87,7 +87,7 @@ function getById($cle) {
           if ($sortie['idMedecin']!=null) {
             $idMedecin = $this->getById($sortie['idMedecin']);  
           } 
-          $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+          $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),$idMedecin,$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse'],new DateTime($sortie['date_naissance']),$sortie['lieu_de_naissance']);
           $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
       }
     }
@@ -98,9 +98,9 @@ function getById($cle) {
 function insert($item) {
     $pdo = $this->connexion->getPDO();
     $insert = $pdo->prepare('INSERT INTO 
-        Personne(fonction,nomPersonne,prenomPersonne,civilite,Adresse,code_postal,ville,numero_securite,idMedecin) 
+        Personne(fonction,nomPersonne,prenomPersonne,civilite,Adresse,code_postal,ville,numero_securite,idMedecin,date_naissance,lieu_de_naissance) 
             VALUES
-            (:fonction,:nomPersonne,:prenomPersonne,:civilite,:Adresse,:code_postal,:ville,:numero_securite,:idMedecin)'
+            (:fonction,:nomPersonne,:prenomPersonne,:civilite,:Adresse,:code_postal,:ville,:numero_securite,:idMedecin,:date_naissance,:lieu_de_naissance)'
     );
 
     if($item instanceof Medecin) {
@@ -113,7 +113,9 @@ function insert($item) {
             'code_postal' => NULL,
             'ville' => NULL,
             'numero_securite' => NULL,
-            'idMedecin' => NULL
+            'idMedecin' => NULL,
+            'date_naissance' => NULL,
+            'lieu_de_naissance' => NULL
         ));
     }
 
@@ -131,7 +133,9 @@ function insert($item) {
             'code_postal' => $item->getCode_postal(),
             'ville' => $item->getVille(),
             'numero_securite' => $item->getNumero_securite(),
-            'idMedecin' => $idMedecin
+            'idMedecin' => $idMedecin,
+            'date_naissance' => $item->getDateNaissance()->format("Y-m-d"),
+            'lieu_de_naissance' => $item->getLieuDeNaissance()
         ));
 
     }
@@ -142,50 +146,50 @@ function update($item) {
     $update = $pdo->prepare('UPDATE Personne SET
         nomPersonne = :nomPersonne ,
         prenomPersonne = :prenomPersonne ,
-        civilite =  :civilite ,
+        civilite = :civilite ,
         Adresse = :adresse ,
         code_postal = :code_postal ,
         ville = :ville ,
         numero_securite = :numero_securite,
-        idMedecin = :idMedecin
+        idMedecin = :idMedecin,
+        date_naissance = :date_naissance,
+        lieu_de_naissance = :lieu_de_naissance
         WHERE idPersonne = :idPersonne '
     );
-    $personne = $item->getPersonne();
-    $nom = $personne->getNom();
-    $prenom = $item->getPersonne()->getPrenom();
-    $civilite = $item->getPersonne()->getCivilite()->name;
-    $id = $item->getPersonne()->getIdPersonne();
-    $update->bindParam(':idPersonne',$id , PDO::PARAM_INT);
-    $update->bindParam(':nomPersonne',$nom , PDO::PARAM_STR);
-    $update->bindParam(':prenomPersonne',$prenom ,PDO::PARAM_STR);
-    $update->bindParam(':civilite',$civilite,PDO::PARAM_STR);
-
     if($item instanceof Medecin) {
-        $null=NULL;
-        $update->bindParam(':adresse',$null , PDO::PARAM_STR);
-        $update->bindParam(':code_postal',$null ,PDO::PARAM_STR);
-        $update->bindParam(':ville',$null,PDO::PARAM_STR);
-        $update->bindParam(':numero_securite',$null , PDO::PARAM_STR);
-        $update->bindParam(':idMedecin',$null ,PDO::PARAM_INT);
+        $update->execute(array(
+            'idPersonne' => $item->getPersonne()->getIdPersonne(),
+            'nomPersonne' => $item->getPersonne()->getNom(),
+            'prenomPersonne' => $item->getPersonne()->getPrenom(),
+            'civilite' => $item->getPersonne()->getCivilite()->name,
+            'adresse' => null,
+            'code_postal' => null,
+            'ville' => null,
+            'numero_securite' => null,
+            'idMedecin' => null,
+            'date_naissance' => null,
+            'lieu_de_naissance' => null
+        ));
     }
-
     if($item instanceof Usager) {
         $idMedecin=$item->getMedecinReferant();
         if (isset($idMedecin)) {
             $idMedecin = $item->getMedecinReferant()->getPersonne()->getIdPersonne();
         }
-        $adresse = $item->getAdresse();
-        $code_postal = $item->getCode_postal();
-        $ville = $item->getVille();
-        $numero_securite = $item->getNumero_securite();
-        $update->bindParam(':adresse',$adresse , PDO::PARAM_STR);
-        $update->bindParam(':code_postal',$code_postal ,PDO::PARAM_STR);
-        $update->bindParam(':ville',$ville,PDO::PARAM_STR);
-        $update->bindParam(':numero_securite',$numero_securite , PDO::PARAM_STR);
-        $update->bindParam(':idMedecin',$idMedecin ,PDO::PARAM_INT);
+        $update->execute(array(
+            'idPersonne' => $item->getPersonne()->getIdPersonne(),
+            'nomPersonne' => $item->getPersonne()->getNom(),
+            'prenomPersonne' => $item->getPersonne()->getPrenom(),
+            'civilite' => $item->getPersonne()->getCivilite()->name,
+            'adresse' => $item->getAdresse(),
+            'code_postal' => $item->getCode_postal(),
+            'ville' => $item->getVille(),
+            'numero_securite' => $item->getNumero_securite(),
+            'idMedecin' => $idMedecin,
+            'date_naissance' => $item->getDateNaissance()->format("Y-m-d"),
+            'lieu_de_naissance' => $item->getLieuDeNaissance()
+        ));
     }
-
-    $update->execute();
 }
 function delete($cle) {
     if($this->getById($cle) instanceof Medecin) {
@@ -207,7 +211,7 @@ function getAllUsagerByMedecin($cle) {
     $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
     $retour = array();
     foreach ($tableauSortie as $cle => $sortie) {
-        $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),$this->getById($sortie['idMedecin']),$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse']);
+        $personne = new Usager(new Personne($sortie['nomPersonne'],$sortie['prenomPersonne'],Civilite::valueOf($sortie['civilite'])),$this->getById($sortie['idMedecin']),$sortie['numero_securite'],$sortie['code_postal'],$sortie['ville'],$sortie['Adresse'],new DateTime($sortie['date_naissance']),$sortie['lieu_de_naissance']);
         $personne->getPersonne()->setIdPersonne($sortie['idPersonne']);
         array_push($retour,$personne);
     }

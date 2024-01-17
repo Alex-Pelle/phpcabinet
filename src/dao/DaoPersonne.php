@@ -237,6 +237,25 @@ function getFemmeBetween25And50() {
 function getFemmeAfter50() {
     return $this->getIndividuAfter50(Civilite::F);
 }
+function getStatistiquesMedecins() {
+    $pdo = $this->connexion->getPDO();
+    $getAll = $pdo->query("SELECT 
+    Pers.nomPersonne , 
+    Pers.prenomPersonne,
+    (
+        SELECT SUM(RV.duree_minute)
+        FROM rendez_vous RV
+        WHERE RV.idMedecin = Pers.idPersonne
+    ) AS totalDureeRendezVous
+FROM
+    Personne Pers
+WHERE
+    Pers.fonction = 'M'
+ORDER BY
+    totalDureeRendezVous DESC");
+$tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
+return $tableauSortie;
+}
 
 private function getIndividuBefore25(Civilite $civilite) {
     $pdo = $this->connexion->getPDO();

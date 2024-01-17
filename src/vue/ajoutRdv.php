@@ -7,7 +7,7 @@ require_once(__DIR__.'/head.php'); ?>
   <div class="container">
     <h1>Enregistrer un rendez-vous</h1>
     <div class="container">
-      <form action="AjouterMedecin.php" method="post">
+      <form action="/index.php?action=addRdv" method="post">
         <input-field>
         <legend>Usager :</legend>
           <select name="usager" id="usager">
@@ -42,7 +42,7 @@ require_once(__DIR__.'/head.php'); ?>
           </div>
         </input-field>
         <input class="btn btn-primary" type="submit" value="Enregistrer">
-        <a href="../index.php" class="btn btn-seconday">Annuler</a>
+        <a href="/index.php?action=rdvs" class="btn btn-seconday">Annuler</a>
       </form>
     </div>
   </div>

@@ -62,7 +62,7 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
       ControlleurMedecin::delete($_GET['id']);
     }
     else {
-      echo "Préciser l'id de l'Medecin";
+      echo "Préciser l'id du Medecin";
     }
   }elseif ($_GET['action'] === 'rdvs'){
     ControlleurRdv::liste();
@@ -71,15 +71,15 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
   } elseif ($_GET['action'] === 'addRdv'){
     ControlleurRdv::insert($_POST);
   } elseif ($_GET['action'] === 'detailRdv'){
-    if(isset($_GET['id'])) {
-      ControlleurRdv::detail($_GET['id']);
+    if(isset($_GET['idUsager']) && isset($_GET['idMedecin']) && isset($_GET['dateHeure'])) {
+      ControlleurRdv::detail($_GET['idUsager'],$_GET['idMedecin'],$_GET['dateHeure']);
     }
     else {
       throw new ErrorException('Aucun ID spécifié');
     }
   } elseif ($_GET['action'] === 'modifRdv'){
-    if(isset($_GET['id'])) {
-      ControlleurRdv::modif($_GET['id']);
+    if(isset($_GET['idUsager']) && isset($_GET['idMedecin']) && isset($_GET['dateHeure'])) {
+      ControlleurRdv::modif($_GET['idUsager'],$_GET['idMedecin'],$_GET['dateHeure']);
     }
     else {
       echo "Préciser l'id de l'Rdv";
@@ -87,8 +87,8 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
   } elseif ($_GET['action'] === 'updateRdv'){
     ControlleurRdv::update($_POST);
   }elseif ($_GET['action'] === 'deleteRdv'){
-    if(isset($_GET['id'])) {
-      ControlleurRdv::delete($_GET['id']);
+    if(isset($_GET['idUsager']) && isset($_GET['idMedecin']) && isset($_GET['dateHeure'])) {
+      ControlleurRdv::delete($_GET['idUsager'],$_GET['idMedecin'],$_GET['dateHeure']);
     }
     else {
       echo "Préciser l'id de l'Rdv";

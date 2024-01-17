@@ -218,6 +218,48 @@ function getAllUsagerByMedecin($cle) {
     return $retour;
 }
 
+function getHommeBefore25() {
+    return $this->getIndividuBefore25(Civilite::H);
+}
+function getHommeBetween25And50() {
+    return $this->getIndividuBetween25And50(Civilite::H);
+}
+function getHommeAfter50() {
+    return $this->getIndividuAfter50(Civilite::H);
+}
+
+function getFemmeBefore25() {
+    return $this->getIndividuBefore25(Civilite::F);
+}
+function getFemmeBetween25And50() {
+    return $this->getIndividuBetween25And50(Civilite::F);
+}
+function getFemmeAfter50() {
+    return $this->getIndividuAfter50(Civilite::F);
+}
+
+private function getIndividuBefore25(Civilite $civilite) {
+    $pdo = $this->connexion->getPDO();
+    $getAll = $pdo->query("SELECT COUNT(*) AS Total FROM Personne WHERE date_naissance > DATE_SUB(NOW(), INTERVAL 25 YEAR) AND civilite = '$civilite->name'");
+    return $this->generateTableauSortie($getAll);
+}
+
+private function getIndividuBetween25And50(Civilite $civilite) {
+    $pdo = $this->connexion->getPDO();
+    $getAll = $pdo->query("SELECT COUNT(*) AS Total FROM Personne WHERE date_naissance BETWEEN DATE_SUB(NOW(), INTERVAL 50 YEAR) AND DATE_SUB(NOW(), INTERVAL 25 YEAR) AND civilite = '$civilite->name'");
+    return $this->generateTableauSortie($getAll);
+}
+
+private function getIndividuAfter50(Civilite $civilite) {
+    $pdo = $this->connexion->getPDO();
+    $getAll = $pdo->query("SELECT COUNT(*) AS Total FROM Personne WHERE date_naissance < DATE_SUB(NOW(), INTERVAL 50 YEAR) AND civilite = '$civilite->name'");
+    return $this->generateTableauSortie($getAll);
+}
+
+private function generateTableauSortie($getAll) {
+    $tableauSortie = $getAll->fetch(PDO::FETCH_ASSOC);
+    return $tableauSortie['Total'];
+}
 }
 
 ?>

@@ -1,11 +1,19 @@
 <?php
 session_start();
-
+$_SESSION['logged'] = isset($_SESSION['logged']) && $_SESSION['logged'];
 require_once(__DIR__.'/controlleur/usagers.php');
 require_once(__DIR__.'/controlleur/medecins.php');
 require_once(__DIR__.'/controlleur/rdv.php');
+require_once(__DIR__.'/controlleur/statistiques.php');
+require_once(__DIR__.'/controlleur/login.php');
 
-if (isset($_GET['action']) && $_GET['action'] !== '') {
+if (isset($_GET['action']) && $_GET['action'] === 'login') {
+  ControlleurLogin::login($_POST);
+}
+elseif (!$_SESSION['logged']) {
+  ControlleurLogin::afficher();
+}
+elseif (isset($_GET['action']) && $_GET['action'] !== '') {
 	if ($_GET['action'] === 'usagers') {
     ControlleurUsager::liste();
 	} elseif ($_GET['action'] === 'ajoutUsager'){
@@ -93,6 +101,8 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
     else {
       echo "Préciser l'id de l'Rdv";
     }
+  } elseif ($_GET['action'] === 'statistiques') {
+    ControlleurStatistiques::generate();
   } else {
     echo "Erreur 404 : la page que vous recherchez n'existe pas.";
 	}

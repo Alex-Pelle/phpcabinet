@@ -6,7 +6,7 @@ require_once(__DIR__.'/head.php'); ?>
     require('header.php');
   ?>
   <div class="container">
-    <h1>Détails de l'usager <?=$nom?></h1>
+    <h1 id="titre">Détails de l'usager <?=$nom?></h1>
     <div class="container">
       <h2>Identité de l'usager:</h2>
       <p>Prénom: <?= $prenom?></p>
@@ -14,7 +14,7 @@ require_once(__DIR__.'/head.php'); ?>
       <p>Numéro de sécurité sociale: <?= $securite?></p>
       <p>Civilité: <?= $civilite?></p>
       <p>Date de naissance: <?= $date_naissance?></p>
-      <p>Lieu de naissance: <?= $lie_naissance?></p>
+      <p>Lieu de naissance: <?= $lieu_naissance?></p>
     </div>
     <div class="container">
       <h2>Adresse</h2>
@@ -30,7 +30,7 @@ require_once(__DIR__.'/head.php'); ?>
     }?>
     <a href="/index.php?action=modifUsager&id=<?=$id?>" class="btn btn-primary">Modifier</button>
     <a href="/index.php?action=deleteUsager&id=<?=$id?>" class="btn btn-danger">Supprimer</button>
-    <a href="/index.php?action=usagers" class="btn btn-seconday">Retour</a>
+    <a href="/index.php?action=usagers" class="btn btn-seconday">Retour à la liste</a>
   </div>
   <?php
     require('footer.html');

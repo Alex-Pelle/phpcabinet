@@ -4,7 +4,7 @@ require_once(__DIR__.'/head.php'); ?>
   <?php
     require('header.php');
   ?>
-  <h1>
+  <h1 id="titre">
     Liste des rendez-vous du cabinet
   </h1>
   <ul id="liste">

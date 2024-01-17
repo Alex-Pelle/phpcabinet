@@ -1,0 +1,43 @@
+
+#ajout {
+  margin-top: 20px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#liste {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 80%;
+  list-style-type: none;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.usager {
+  width:15%;
+  height: 100px;
+  margin:10px;
+  font-family: sans-serif;
+  font-size: 20px;
+  border: 2px solid rgb(8,15,60);
+  padding: 5px;
+  border-radius: 15px;
+  text-decoration: none;
+}
+
+.usager>li {
+  color: black;
+}
+
+.usager>li>span{ 
+  font-size: 15px;
+}
+
+.H {
+  background-color: rgba(97, 212, 212, 0.507);
+}
+.F {
+  background-color: rgba(215, 155, 230, 0.753);
+}

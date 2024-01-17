@@ -15,7 +15,7 @@ class DaoRDV implements Dao {
       $usager = $daoPersonne->getById($resultat['idUsager']);
       $medecin = $daoPersonne->getById($resultat['idMedecin']);
       $dateheure = new DateTime($resultat['date_rendez_vous'].' '.$resultat['heure_rendez_vous']);
-      $duree = new Duree(intval($resultat['heure_rendez_vous']));
+      $duree = new Duree(intval($resultat['duree_minute']));
       array_push($tableauSortie, new RendezVous($usager,$medecin,$dateheure,$duree));
     }
     return $tableauSortie;
@@ -54,7 +54,12 @@ class DaoRDV implements Dao {
       ));
 
       $sortie = $getById->fetch(PDO::FETCH_ASSOC);
-      return $sortie;
+      $daoPersonne = new DaoPersonne($this->connexion);
+      $usager = $daoPersonne->getById($sortie['idUsager']);
+      $medecin = $daoPersonne->getById($sortie['idMedecin']);
+      $dateheure = new DateTime($sortie['date_rendez_vous'].' '.$sortie['heure_rendez_vous']);
+      $duree = new Duree(intval($sortie['duree_minute']));
+      return new RendezVous($usager,$medecin,$dateheure,$duree);
   }
 
   function insert($item) {
@@ -178,5 +183,3 @@ class DaoRDV implements Dao {
       }
   }
 }
-
-?>

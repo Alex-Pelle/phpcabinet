@@ -33,27 +33,27 @@ class ControlleurRDV {
     $prenomMedecin = $medecin->getPersonne()->getPrenom();
     $date = (new DateTime($dateHeure))->format('d/m/Y');
     $heure = (new DateTime($dateHeure))->format('h:i');
-    var_dump(substr($dateHeure,0,10));
-    var_dump($heure.':00');
     $rdv = $daoRdv->getById(array($idUsager,$idMedecin,substr($dateHeure,0,10),$heure.':00'));
-    $duree = $rdv->getDureeEnMinutes();
+    $duree = $rdv->getDureeEnMinutes()->getNbMinutes();
     require(__DIR__.'/../vue/detailRdv.php');
   }
-  static function modif($id) {
-    $dao = new DAOPersonne(Connexion::getInstance());
-    $usager = $dao->getById($id);
-    $nom = $usager->getPersonne()->getNom();
-    $prenom = $usager->getPersonne()->getPrenom();
-    $isHomme = $usager->getPersonne()->getCivilite() == Civilite::H;
+  static function modif($idUsager, $idMedecin, $dateHeure) {
+    $daoPersonne = new DAOPersonne(Connexion::getInstance());
+    $daoRdv = new DAORDV(Connexion::getInstance());
+    $usager = $daoPersonne->getById($idUsager);
+    $nomUsager = $usager->getPersonne()->getNom();
+    $prenomUsager = $usager->getPersonne()->getPrenom();
+    $civilite = $usager->getPersonne()->getCivilite() == Civilite::H ? 'M.' : 'Mme.';
     $securite = $usager->getNumero_securite();
-    $date_naissance = $usager->getDate_naissance();
-    $lieu_naissance = $usager->getLieu_naissance();
-    $adresse = $usager->getAdresse();
-    $cp = $usager->getCode_postal();
-    $ville = $usager->getVille();
-    $medecin = $usager->getMedecinReferant();
-    $medecins = $dao->getAllMedecins();
-    require(__DIR__.'/../vue/modifUsager.php');
+    $medecin = $daoPersonne->getById($idMedecin);
+    $nomMedecin = $medecin->getPersonne()->getNom();
+    $prenomMedecin = $medecin->getPersonne()->getPrenom();
+    $date = (new DateTime($dateHeure))->format('d/m/Y');
+    $dateFormatee = (new DateTime($dateHeure))->format('Y-m-d');
+    $heure = (new DateTime($dateHeure))->format('h:i');
+    $rdv = $daoRdv->getById(array($idUsager,$idMedecin,substr($dateHeure,0,10),$heure.':00'));
+    $duree = $rdv->getDureeEnMinutes()->getNbMinutes();
+    require(__DIR__.'/../vue/modifRdv.php');
   }
 
   public static function insert($input) {
@@ -63,7 +63,7 @@ class ControlleurRDV {
       $usager = $daoPersonne->getById($input['usager']);
       $medecin = $daoPersonne->getById($input['medecin']);
       $dateTime = new DateTime($input['date'].' '.$input['heure']);
-      if ($dateTime < new DateTime()) {$
+      if ($dateTime < new DateTime()) {
         $_SESSION['notification_message'] = 'Choissiez une date valide (future) !';
         header('Location: /index.php?action=ajoutRdv',true);
         return;
@@ -79,28 +79,31 @@ class ControlleurRDV {
     header('Location: /index.php?action=rdvs',true);
   }
   public static function update($input) {
-    $dao = new DaoPersonne(Connexion::getInstance());
+    $daoPersonne = new DaoPersonne(Connexion::getInstance());
+    $daoRdv = new DaoRDV(Connexion::getInstance());
     try {
-      $usager = new Usager(
-        new Personne($input['nom'], $input['prenom'], Civilite::valueOf($input['civilite'])), 
-        ($input['medecin_referent'] != '') ? $dao->getById($input['medecin_referent']): null, 
-        $input['numero_securite'], 
-        $input['code_postal'], 
-        $input['ville'], 
-        $input['adresse']);
-      $usager->getPersonne()->setIdPersonne($input['id']);
+      $usager = $daoPersonne->getById($input['idUsager']);
+      $medecin = $daoPersonne->getById($input['idMedecin']);
+      $dateTime = new DateTime($input['date'].' '.$input['heure']);
+      if ($dateTime < new DateTime()) {$
+        $_SESSION['notification_message'] = 'Choissiez une date valide (future) !';
+        header('Location: /index.php?action=ajoutRdv',true);
+        return;
+      }
+      $duree = new Duree(intval($input['duree']));
+      $rdv = new RendezVous($usager, $medecin, $dateTime,$duree);
     }
     catch (Exception $e) {
       throw new ErrorException('Bad values');
     }
-    $dao->update($usager);
-    $_SESSION['notification_message'] = 'Usager '.$input['nom'].' modifié avec succès!';
-    header('Location: /index.php?action=usagers',true);
+    $daoRdv->update($rdv);
+    $_SESSION['notification_message'] = 'Rendez-vous modifié avec succès!';
+    header('Location: /index.php?action=detailRdv&idMedecin='.$input['idMedecin'].'&idUsager='.$input['idUsager'].'&dateHeure='.$dateTime->format('Y-m-d h:i'),true);
   }
-  public static function delete($id) {
-    $dao = new DaoPersonne(Connexion::getInstance());
-    $dao->delete($id);
-    $_SESSION['notification_message'] = 'Usager supprimé avec succès!';
-    header('Location: /index.php?action=usagers',true);
+  static function delete($idUsager, $idMedecin, $dateHeure) {
+    $dao = new DaoRDV(Connexion::getInstance());
+    $dao->delete(array($idUsager,$idMedecin,substr($dateHeure,0,10),substr($dateHeure,10).':00'));
+    $_SESSION['notification_message'] = 'Rdv supprimé avec succès!';
+    header('Location: /index.php?action=rdvs',true);
   }
 }

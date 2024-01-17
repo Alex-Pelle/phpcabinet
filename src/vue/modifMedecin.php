@@ -5,7 +5,7 @@ require_once(__DIR__.'/head.php'); ?>
     require('header.php');
   ?>
   <div class="container">
-    <h1>Modification de l'medecin <?=$nom?></h1>
+    <h1 id="titre">Modification de l'medecin <?=$nom?></h1>
     <div class="container">
       <form action="/index.php?action=updateMedecin" method="post">
         <input hidden type="text" name="id" value="<?= $id?>">

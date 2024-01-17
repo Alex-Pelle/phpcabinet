@@ -8,7 +8,7 @@ require_once(__DIR__.'/../modele/Usager.php');
 require_once(__DIR__.'/../modele/Medecin.php');
 require_once(__DIR__.'/../modele/Civilite.php');
 $daoPersonne = new DaoPersonne(Connexion::getInstance());
-
+/*
 
 $medecin1 = new Medecin(new Personne("nomMedecin1","prenomMedecin2",Civilite::H));
 $medecin2 = new Medecin(new Personne("nomMedecin2","prenomMedecin2",Civilite::F));
@@ -73,4 +73,5 @@ foreach ($array as $cle => $valeur) {
 }
 */
 
+$daoPersonne->delete(141);
 ?>

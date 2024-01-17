@@ -58,7 +58,8 @@ class DaoRDV implements Dao {
   }
 
   function insert($item) {
-      $pdo = $this->connexion->getPDO();
+    try {
+        $pdo = $this->connexion->getPDO();
       $insert = $pdo->prepare('INSERT INTO 
           rendez_vous(idUsager , idMedecin, date_rendez_vous , heure_rendez_vous, duree_minute) 
               VALUES
@@ -74,6 +75,9 @@ class DaoRDV implements Dao {
               'duree_minute' => $item->getDureeEnMinutes()->getNbMinutes()
           ));
       }
+    } catch(Exception $e) {
+        echo $e->getCode()." : ".$e->getMessage();
+    } 
   }
 
   function update($item) {

@@ -27,6 +27,87 @@ CREATE TABLE rendez_vous (
   FOREIGN KEY(idMedecin) REFERENCES Personne(idPersonne)
 );
 
+
+DELIMITER //
+CREATE TRIGGER before_insert_rendez_vous_medecin
+BEFORE INSERT ON rendez_vous
+FOR EACH ROW
+BEGIN
+    DECLARE existing_rendezvous INT;
+    
+    SELECT COUNT(*)
+    INTO existing_rendezvous
+    FROM rendez_vous
+    WHERE idMedecin = NEW.idMedecin
+    AND date_rendez_vous = NEW.date_rendez_vous
+    AND (
+        (heure_rendez_vous BETWEEN NEW.heure_rendez_vous AND ADDTIME(NEW.heure_rendez_vous, SEC_TO_TIME(NEW.duree_minute * 60)))
+        OR
+        (ADDTIME(heure_rendez_vous, SEC_TO_TIME(duree_minute * 60)) BETWEEN NEW.heure_rendez_vous AND ADDTIME(NEW.heure_rendez_vous, SEC_TO_TIME(NEW.duree_minute * 60)))
+    );
+
+    IF existing_rendezvous > 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Le médecin a déjà un rendez-vous programmé dans cet intervalle.';
+    END IF;
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER before_insert_rendez_vous_usager
+BEFORE INSERT ON rendez_vous
+FOR EACH ROW
+BEGIN
+    DECLARE existing_rendezvous INT;
+    
+    SELECT COUNT(*)
+    INTO existing_rendezvous
+    FROM rendez_vous
+    WHERE idUsager = NEW.idUsager
+    AND date_rendez_vous = NEW.date_rendez_vous
+    AND (
+        (heure_rendez_vous BETWEEN NEW.heure_rendez_vous AND ADDTIME(NEW.heure_rendez_vous, SEC_TO_TIME(NEW.duree_minute * 60)))
+        OR
+        (ADDTIME(heure_rendez_vous, SEC_TO_TIME(duree_minute * 60)) BETWEEN NEW.heure_rendez_vous AND ADDTIME(NEW.heure_rendez_vous, SEC_TO_TIME(NEW.duree_minute * 60)))
+    );
+
+    IF existing_rendezvous > 0 THEN
+        SIGNAL SQLSTATE '45001'
+        SET MESSAGE_TEXT = 'L\'usager a déjà un rendez-vous programmé dans cet intervalle.';
+    END IF;
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER before_update_duree_rendez_vous
+BEFORE UPDATE ON rendez_vous
+FOR EACH ROW
+BEGIN
+    DECLARE existing_rendezvous INT;
+
+    IF NEW.duree_minute <> OLD.duree_minute THEN
+        SELECT COUNT(*)
+        INTO existing_rendezvous
+        FROM rendez_vous
+        WHERE idMedecin = NEW.idMedecin
+        AND date_rendez_vous = NEW.date_rendez_vous
+        AND (
+            (heure_rendez_vous BETWEEN NEW.heure_rendez_vous AND ADDTIME(NEW.heure_rendez_vous, SEC_TO_TIME(NEW.duree_minute * 60)))
+            OR
+            (ADDTIME(heure_rendez_vous, SEC_TO_TIME(OLD.duree_minute * 60)) BETWEEN NEW.heure_rendez_vous AND ADDTIME(NEW.heure_rendez_vous, SEC_TO_TIME(NEW.duree_minute * 60)))
+        );
+
+        IF existing_rendezvous > 0 THEN
+            SIGNAL SQLSTATE '45002'
+            SET MESSAGE_TEXT = 'La modification de la durée chevauche l\'intervalle d\'un autre rendez-vous pour le même médecin.';
+        END IF;
+    END IF;
+END;
+//
+DELIMITER ;
+
+
     INSERT INTO Personne (fonction, nomPersonne, prenomPersonne, civilite, Adresse, code_postal, ville, numero_securite, idMedecin, date_naissance, lieu_de_naissance)
 VALUES
     ('M', 'Dupont', 'Isabelle', 'F', null, null, null, null, null, null, null),
@@ -89,6 +170,8 @@ VALUES
     ('U','Ethan', 'Gérard', 'H', '889 Rue des Sables', 'Antibes', '06600', '2092493560073', null, '1977-09-15', 'Levallois-Perret'),
     ('U','Mia', 'Roussel', 'F', '900 Chemin des Grèves', 'Calais', '62100', '2977799304615', null, '1942-01-25', 'Antibes'),
     ('U','Victor', 'Barbier', 'H', '111 Rue des Horizons', 'Courbevoie', '92400', '2445632648406', null, '1994-05-08', 'Rouen');
+
+
 
 
 

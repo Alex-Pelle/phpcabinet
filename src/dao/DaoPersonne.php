@@ -191,18 +191,9 @@ function update($item) {
         ));
     }
 }
-function delete($cle) {
-    if($this->getById($cle) instanceof Medecin) {
-        $array = $this->getAllUsagerByMedecin($cle);
-        foreach ($array as $cle => $valeur) {
-            $valeur->setMedecinReferant(null);
-            $this->update($valeur);
-        }
-    }
-    $pdo = $this->connexion->getPDO();
-    $delete = $pdo->prepare('DELETE FROM Personne WHERE idPersonne = :idPersonne');
-    $delete->bindParam(':idPersonne',$cle,PDO::PARAM_INT);
-    $delete->execute();
+function delete($item) {
+    $this->delMedecinReference($item);
+    $this->deletePersonne($item);
 }
 
 function getAllUsagerByMedecin($cle) {
@@ -278,6 +269,26 @@ private function getIndividuAfter50(Civilite $civilite) {
 private function generateTableauSortie($getAll) {
     $tableauSortie = $getAll->fetch(PDO::FETCH_ASSOC);
     return $tableauSortie['Total'];
+}
+
+private function deletePersonne($cle) {
+    $pdo = $this->connexion->getPDO();
+    $delete = $pdo->prepare('DELETE FROM Personne WHERE idPersonne = :idPersonne');
+    $delete->bindParam(':idPersonne',$cle,PDO::PARAM_INT);
+    echo $delete->execute(array(
+        'idPersonne' => $cle
+    ));
+}
+
+private function delMedecinReference($item) {
+    $personne = $this->getById($item);
+    if($personne instanceof Medecin) {
+        $array = $this->getAllUsagerByMedecin($personne->getPersonne()->getIdPersonne());
+        foreach ($array as $cle => $valeur) {
+            $valeur->setMedecinReferant(null);
+            $this->update($valeur);
+        }
+    }
 }
 }
 

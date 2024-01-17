@@ -163,7 +163,7 @@ class DaoRDV implements Dao {
       foreach ($tableauSortie as $cle => $sortie) {
           $usager = $daoPersonne->getById($sortie['idUsager']);
           $medecin = $daoPersonne->getById($sortie['idMedecin']);
-          $dateHeure = new DateTime($sortie['date_rendez_vous'].$sortie['heure_rendez_vous']);
+          $dateHeure = new DateTime($sortie['date_rendez_vous'].' '.$sortie['heure_rendez_vous']);
           $duree = new Duree($sortie['duree_minute']); 
           $rdv = new RendezVous($usager,$medecin,$dateHeure);
           $rdv->setDureeEnMinutes($duree);

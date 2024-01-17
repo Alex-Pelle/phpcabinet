@@ -12,8 +12,8 @@ require_once(__DIR__.'/head.php'); ?>
     foreach($rdvs as $rdv) {
       echo '
       <li>
-        <a href="/index.php?action=detailRdv&idMedecin='.$rdv->getMedecin()->getPersonne()->getIdPersonne().'&idUsager='.$rdv->getUsager()->getPersonne()->getIdPersonne().'&dateHeure='.$rdv->getDateHeureDebut()->format('Y-m-d h:i').'">
-          <p>Le '.$rdv->getDateHeureDebut()->format('d/m/Y \à h:m').'</p>
+        <a href="/index.php?action=detailRdv&idMedecin='.$rdv->getMedecin()->getPersonne()->getIdPersonne().'&idUsager='.$rdv->getUsager()->getPersonne()->getIdPersonne().'&dateHeure='.$rdv->getDateHeureDebut()->format('Y-m-d H:i').'">
+          <p>Le '.$rdv->getDateHeureDebut()->format('d/m/Y \à H:i').'</p>
           <p>Dr. '.$rdv->getMedecin()->getPersonne()->getNom().' avec '.$rdv->getUsager()->getPersonne()->getNom().'</p>
         </a>
       </li>';

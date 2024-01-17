@@ -30,7 +30,7 @@ require_once(__DIR__.'/head.php'); ?>
           </select>
         </input-field>
         <input-field>
-            <label for="date">Date : <input type="date" name="date" id="date"></label>
+            <label for="date">Date : <input type="date" name="date" id="date" min="<?= (new DateTime())->format('Y-m-d')?>"></label>
             <label for="heure">Heure : <input type="time" name="heure" id="heure"></label>
             <label for="duree">Durée (en minutes): <input type="number" name="duree" id="duree" value="30"></label>
         </input-field>

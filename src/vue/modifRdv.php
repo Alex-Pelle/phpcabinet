@@ -1,4 +1,5 @@
 <?php $titre = 'Détails '.$dateHeure;
+$css = 'form';
 require_once(__DIR__.'/head.php'); ?>
 </head>
 <body>
@@ -29,7 +30,7 @@ require_once(__DIR__.'/head.php'); ?>
       <label hidden for="date">Date : <input type="date" name="date" value="<?= $dateFormatee?>"></label>
       <input hidden type="time" name="heure" id="heure" value="<?= $heure?>">
       <input class="btn btn-primary" type="submit" value="Enregistrer">
-      <a href="/index.php?action=detailRdv&idMedecin=<?=$rdv->getMedecin()->getPersonne()->getIdPersonne().'&idUsager='.$rdv->getUsager()->getPersonne()->getIdPersonne().'&dateHeure='.$rdv->getDateHeureDebut()->format('Y-m-d h:i')?>"class="btn btn-secondary">Annuler</a>
+      <a href="/index.php?action=detailRdv&idMedecin=<?=$rdv->getMedecin()->getPersonne()->getIdPersonne().'&idUsager='.$rdv->getUsager()->getPersonne()->getIdPersonne().'&dateHeure='.$rdv->getDateHeureDebut()->format('Y-m-d H:i')?>"class="btn btn-secondary">Annuler</a>
     </form>
   </div>
   <?php

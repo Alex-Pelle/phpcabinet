@@ -61,6 +61,11 @@ class ControlleurUsager {
       $_SESSION['notification_color'] = 'red';
       header('Location: /index.php?action=ajoutUsager',true);
     }
+    if (new DateTime($input['date_naissance']) < new DateTime()) {
+      $_SESSION['notification_message'] = 'La date de naissance doit être valide (passée) !';
+      $_SESSION['notification_color'] = 'red';
+      header('Location: /index.php?action=ajoutUsager',true);
+    } 
     try {
       $usager = new Usager(
         new Personne($input['nom'], $input['prenom'], Civilite::valueOf($input['civilite'])), 
@@ -73,7 +78,10 @@ class ControlleurUsager {
         $input['lieu_naissance']);
     }
     catch (Exception $e) {
-      throw new ErrorException('Bad values');
+      $_SESSION['notification_message'] = $e->getMessage();
+      $_SESSION['notification_color'] = 'red';
+      header('Location: /index.php?action=ajoutRdv',true);
+      return;
     }
     $dao->insert($usager);
     $_SESSION['notification_message'] = 'Usager '.$input['prenom'].' '.$input['nom'].' créé avec succès!';
@@ -100,7 +108,10 @@ class ControlleurUsager {
       $usager->getPersonne()->setIdPersonne($input['id']);
     }
     catch (Exception $e) {
-      throw new ErrorException('Bad values');
+      $_SESSION['notification_message'] = $e->getMessage();
+      $_SESSION['notification_color'] = 'red';
+      header('Location: /index.php?action=ajoutRdv',true);
+      return;
     }
     $dao->update($usager);
     $_SESSION['notification_message'] = 'Usager '.$input['prenom'].' '.$input['nom'].' modifié avec succès!';

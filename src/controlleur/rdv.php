@@ -32,7 +32,7 @@ class ControlleurRDV {
     $nomMedecin = $medecin->getPersonne()->getNom();
     $prenomMedecin = $medecin->getPersonne()->getPrenom();
     $date = (new DateTime($dateHeure))->format('d/m/Y');
-    $heure = (new DateTime($dateHeure))->format('h:i');
+    $heure = (new DateTime($dateHeure))->format('H:i');
     $rdv = $daoRdv->getById(array($idUsager,$idMedecin,substr($dateHeure,0,10),$heure.':00'));
     $duree = $rdv->getDureeEnMinutes()->getNbMinutes();
     require(__DIR__.'/../vue/detailRdv.php');
@@ -50,7 +50,7 @@ class ControlleurRDV {
     $prenomMedecin = $medecin->getPersonne()->getPrenom();
     $date = (new DateTime($dateHeure))->format('d/m/Y');
     $dateFormatee = (new DateTime($dateHeure))->format('Y-m-d');
-    $heure = (new DateTime($dateHeure))->format('h:i');
+    $heure = (new DateTime($dateHeure))->format('H:i');
     $rdv = $daoRdv->getById(array($idUsager,$idMedecin,substr($dateHeure,0,10),$heure.':00'));
     $duree = $rdv->getDureeEnMinutes()->getNbMinutes();
     require(__DIR__.'/../vue/modifRdv.php');
@@ -65,6 +65,7 @@ class ControlleurRDV {
       $dateTime = new DateTime($input['date'].' '.$input['heure']);
       if ($dateTime < new DateTime()) {
         $_SESSION['notification_message'] = 'Choissiez une date valide (future) !';
+        $_SESSION['notification_color'] = 'red';
         header('Location: /index.php?action=ajoutRdv',true);
         return;
       }
@@ -72,7 +73,10 @@ class ControlleurRDV {
       $rdv = new RendezVous($usager, $medecin, $dateTime,$duree);
     }
     catch (Exception $e) {
-      throw new ErrorException('Bad values');
+      $_SESSION['notification_message'] = $e->getMessage();
+      $_SESSION['notification_color'] = 'red';
+      header('Location: /index.php?action=ajoutRdv',true);
+      return;
     }
     $daoRdv->insert($rdv);
     $_SESSION['notification_message'] = 'Rendez-vous prévu avec succès!';
@@ -94,11 +98,14 @@ class ControlleurRDV {
       $rdv = new RendezVous($usager, $medecin, $dateTime,$duree);
     }
     catch (Exception $e) {
-      throw new ErrorException('Bad values');
+      $_SESSION['notification_message'] = $e->getMessage();
+      $_SESSION['notification_color'] = 'red';
+      header('Location: /index.php?action=ajoutRdv',true);
+      return;
     }
     $daoRdv->update($rdv);
     $_SESSION['notification_message'] = 'Rendez-vous modifié avec succès!';
-    header('Location: /index.php?action=detailRdv&idMedecin='.$input['idMedecin'].'&idUsager='.$input['idUsager'].'&dateHeure='.$dateTime->format('Y-m-d h:i'),true);
+    header('Location: /index.php?action=detailRdv&idMedecin='.$input['idMedecin'].'&idUsager='.$input['idUsager'].'&dateHeure='.$dateTime->format('Y-m-d H:i'),true);
   }
   static function delete($idUsager, $idMedecin, $dateHeure) {
     $dao = new DaoRDV(Connexion::getInstance());

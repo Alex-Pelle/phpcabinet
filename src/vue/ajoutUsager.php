@@ -12,7 +12,7 @@ require_once(__DIR__.'/head.php'); ?>
             <label for="prenom">Prénom : <input required type="text" name="prenom" id="prenom"></label>
             <label for="nom">Nom : <input required type="text" name="nom" id="nom"></label>
             <label for="numero_securite">Numéro de sécurité sociale : <input required type="text" name="numero_securite" id="numero_securite"></label>
-            <label for="date_naissance">Date de naissance : <input required type="date" name="date_naissance" id="date_naissance"></label>
+            <label for="date_naissance">Date de naissance : <input required type="date" name="date_naissance" id="date_naissance" max="<?= (new DateTime())->format('Y-m-d')?>"></label>
             <label for="lieu_naissance">Lieu de naissance : <input required type="text" name="lieu_naissance" id="lieu_naissance"></label>
         </input-field>
         <input-field>

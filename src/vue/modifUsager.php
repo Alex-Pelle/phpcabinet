@@ -1,4 +1,5 @@
 <?php $titre = 'Modification '.$nom;
+$css = 'form';
 require_once(__DIR__.'/head.php'); ?>
 <body>
   <?php
@@ -12,7 +13,7 @@ require_once(__DIR__.'/head.php'); ?>
       <label for="prenom">Prénom : <input type="text" name="prenom" id="prenom" value="<?= $prenom?>"></label>
       <label for="nom">Nom : <input type="text" name="nom" id="nom" value="<?= $nom?>"></label>
       <label for="numero_securite">Numéro de sécurité sociale : <input type="text" name="numero_securite" id="numero_securite" value="<?= $securite?>"  ></label>
-      <label for="date_naissance">Date de naissance : <input type="date" name="date_naissance" id="date_naissance" value="<?= $date_naissance?>" ></label>
+      <label for="date_naissance">Date de naissance : <input type="date" name="date_naissance" id="date_naissance" max="<?= (new DateTime())->format('Y-m-d')?>" value="<?= $date_naissance?>"></label>
       <label for="lieu_naissance">Lieu de naissance : <input type="text" name="lieu_naissance" id="lieu_naissance" value="<?= $lieu_naissance?>" ></label>
     <input-field>
       <legend>Civilité de l'usager: </legend>

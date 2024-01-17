@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rendez-vous</title>
-</head>
+<?php $titre = 'Rendez-vous';
+require_once(__DIR__.'/head.php'); ?>
 <body>
   <?php
-    require('header.html');
+    require('header.php');
   ?>
   <h1>
     Liste des rendez-vous du cabinet

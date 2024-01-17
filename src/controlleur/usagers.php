@@ -4,7 +4,6 @@ require_once(__DIR__.'/../dao/DaoPersonne.php');
 require_once(__DIR__.'/../modele/Medecin.php');
 require_once(__DIR__.'/../modele/Usager.php');
 require_once(__DIR__.'/../modele/Personne.php');
-require_once(__DIR__.'/usagers.php');
 
 class ControlleurUsager {
   static function isUsager($id) {
@@ -29,6 +28,8 @@ class ControlleurUsager {
     $prenom = $usager->getPersonne()->getPrenom();
     $civilite = $usager->getPersonne()->getCivilite() == Civilite::H ? 'Homme' : 'Femme';
     $securite = $usager->getNumero_securite();
+    $date_naissance = $usager->getDate_naissance();
+    $lieu_naissance = $usager->getLieu_naissance();
     $adresse = $usager->getAdresse();
     $cp = $usager->getCode_postal();
     $ville = $usager->getVille();
@@ -43,6 +44,8 @@ class ControlleurUsager {
     $prenom = $usager->getPersonne()->getPrenom();
     $isHomme = $usager->getPersonne()->getCivilite() == Civilite::H;
     $securite = $usager->getNumero_securite();
+    $date_naissance = $usager->getDate_naissance();
+    $lieu_naissance = $usager->getLieu_naissance();
     $adresse = $usager->getAdresse();
     $cp = $usager->getCode_postal();
     $ville = $usager->getVille();
@@ -66,10 +69,11 @@ class ControlleurUsager {
       throw new ErrorException('Bad values');
     }
     $dao->insert($usager);
+    $_SESSION['notification_message'] = 'Usager '.$input['nom'].' créé avec succès!';
     header('Location: /index.php?action=usagers',true);
   }
   public static function update($input) {
-    $dao = new DaoPersonne(COnnexion::getInstance());
+    $dao = new DaoPersonne(Connexion::getInstance());
     try {
       $usager = new Usager(
         new Personne($input['nom'], $input['prenom'], Civilite::valueOf($input['civilite'])), 
@@ -84,6 +88,13 @@ class ControlleurUsager {
       throw new ErrorException('Bad values');
     }
     $dao->update($usager);
+    $_SESSION['notification_message'] = 'Usager '.$input['nom'].' modifié avec succès!';
+    header('Location: /index.php?action=usagers',true);
+  }
+  public static function delete($id) {
+    $dao = new DaoPersonne(Connexion::getInstance());
+    $dao->delete($id);
+    $_SESSION['notification_message'] = 'Usager supprimé avec succès!';
     header('Location: /index.php?action=usagers',true);
   }
 }

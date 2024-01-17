@@ -1,23 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <title>Détails <?= $nom?></title>
+<?php $titre = 'Détails '.$nom;
+require_once(__DIR__.'/head.php'); ?>
 </head>
 <body>
   <?php
-    require('header.html');
+    require('header.php');
   ?>
   <div class="container">
     <h1>Détails de l'usager <?=$nom?></h1>
     <div class="container">
       <h2>Identité de l'usager:</h2>
-      <p>Nom: <?= $nom?></p>
       <p>Prénom: <?= $prenom?></p>
+      <p>Nom: <?= $nom?></p>
       <p>Numéro de sécurité sociale: <?= $securite?></p>
       <p>Civilité: <?= $civilite?></p>
+      <p>Date de naissance: <?= $date_naissance?></p>
+      <p>Lieu de naissance: <?= $lie_naissance?></p>
     </div>
     <div class="container">
       <h2>Adresse</h2>
@@ -32,6 +29,7 @@
       </div>';
     }?>
     <a href="/index.php?action=modifUsager&id=<?=$id?>" class="btn btn-primary">Modifier</button>
+    <a href="/index.php?action=deleteUsager&id=<?=$id?>" class="btn btn-danger">Supprimer</button>
     <a href="/index.php?action=usagers" class="btn btn-seconday">Retour</a>
   </div>
   <?php

@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <title>Modification <?= $nom?></title>
-</head>
+<?php $titre = 'Modification '.$nom;
+require_once(__DIR__.'/head.php'); ?>
 <body>
   <?php
-    require('header.html');
+    require('header.php');
   ?>
   <div class="container">
     <h1>Modification de l'usager <?=$nom?></h1>
@@ -18,13 +12,19 @@
         <input-field>
         <legend>Identité de l'usager:</legend>
           <div class="form-group">
-            <label for="nom">Nom : <input type="text" name="nom" id="nom" value="<?= $nom?>"></label>
-          </div>
-          <div class="form-group">
             <label for="prenom">Prénom : <input type="text" name="prenom" id="prenom" value="<?= $prenom?>"></label>
           </div>
           <div class="form-group">
+            <label for="nom">Nom : <input type="text" name="nom" id="nom" value="<?= $nom?>"></label>
+          </div>
+          <div class="form-group">
             <label for="numero_securite">Numéro de sécurité sociale : <input type="text" name="numero_securite" id="numero_securite" value="<?= $securite?>"  ></label>
+          </div>
+          <div class="form-group">
+            <label for="date_naissance">Date de naissance : <input type="date" name="date_naissance" id="date_naissance" value="<?= $date_naissance?>" ></label>
+          </div>
+          <div class="form-group">
+            <label for="lieu_naissance">Lieu de naissance : <input type="text" name="lieu_naissance" id="lieu_naissance" value="<?= $lieu_naissance?>" ></label>
           </div>
         </input-field>
         <input-field class="form-group">
@@ -72,7 +72,7 @@
         </div>
         </input-field>
         <input class="btn btn-primary" type="submit" value="Enregistrer">
-        <a href="/index.php?action=detailsUsager&id=<?= $id?>" class="btn btn-seconday">Annuler</a>
+        <a href="/index.php?action=detailUsager&id=<?= $id?>" class="btn btn-seconday">Annuler</a>
       </form>
     </div>
   </div>

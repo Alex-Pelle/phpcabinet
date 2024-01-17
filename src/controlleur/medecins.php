@@ -38,13 +38,16 @@ static function modif($id) {
 }
 
 public static function insert($input) {
-  $dao = new DaoPersonne(COnnexion::getInstance());
+  $dao = new DaoPersonne(Connexion::getInstance());
   try {
     $medecin = new Medecin(
       new Personne($input['nom'], $input['prenom'], Civilite::valueOf($input['civilite'])));
   }
   catch (Exception $e) {
-    throw new ErrorException('Bad values');
+    $_SESSION['notification_message'] = $e->getMessage();
+    $_SESSION['notification_color'] = 'red';
+    header('Location: /index.php?action=ajoutRdv',true);
+    return;
   }
   $dao->insert($medecin);
   $_SESSION['notification_message'] = 'Médecin '.$input['nom'].' créé avec succès!';
@@ -58,7 +61,10 @@ public static function update($input) {
 
   }
   catch (Exception $e) {
-    throw new ErrorException('Bad values');
+    $_SESSION['notification_message'] = $e->getMessage();
+    $_SESSION['notification_color'] = 'red';
+    header('Location: /index.php?action=ajoutRdv',true);
+    return;
   }
   $dao->update($medecin);
   $_SESSION['notification_message'] = 'Médecin '.$input['nom'].' modifié avec succès!';

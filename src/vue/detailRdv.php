@@ -6,7 +6,7 @@ require_once(__DIR__.'/head.php'); ?>
     require('header.php');
   ?>
   <div class="container">
-    <h1>Détails de ce rendez-vous</h1>
+    <h1 id="titre">Détails de ce rendez-vous</h1>
     <div class="container">
       <a href="/index.php?action=detailUsager&id=<?= $idUsager?>">
         <h2>Usager: </h2>
@@ -18,7 +18,7 @@ require_once(__DIR__.'/head.php'); ?>
     <div class="container">
       <a href="/index.php?action=detailMedecin&id=<?= $idMedecin?>">
         <h2>Médecin:</h2>
-        <p>Prénom: <?= $prenomMedecinr?></p>
+        <p>Prénom: <?= $prenomMedecin?></p>
         <p>Nom: <?= $nomMedecin?></p>
       </a>
     </div>
@@ -26,17 +26,11 @@ require_once(__DIR__.'/head.php'); ?>
       <h2>Date:</h2>
       <p>Date: <?= $date?></p>
       <p>Heure: <?= $heure?></p>
-      <p>Durée: <?= $duree?></p>
+      <p>Durée: <?= $duree?> minutes</p>
     </div>
-    <?php if (isset($medecin)) {
-      echo '<div class="container">
-      <h2>Médecin référent</h2>
-      <p>Dr. '.$medecin->getPersonne()->getPrenom().' '.$medecin->getPersonne()->getNom().'</p>
-      </div>';
-    }?>
-    <a href="/index.php?action=modifUsager&id=<?=$id?>" class="btn btn-primary">Modifier</button>
-    <a href="/index.php?action=deleteUsager&id=<?=$id?>" class="btn btn-danger">Supprimer</button>
-    <a href="/index.php?action=usagers" class="btn btn-seconday">Retour</a>
+    <a href="/index.php?action=modifRdv&idMedecin=<?=$rdv->getMedecin()->getPersonne()->getIdPersonne().'&idUsager='.$rdv->getUsager()->getPersonne()->getIdPersonne().'&dateHeure='.$rdv->getDateHeureDebut()->format('Y-m-d H:i')?>"class="btn btn-primary">Modifier</button>
+    <a href="/index.php?action=deleteRdv&idMedecin=<?=$rdv->getMedecin()->getPersonne()->getIdPersonne().'&idUsager='.$rdv->getUsager()->getPersonne()->getIdPersonne().'&dateHeure='.$rdv->getDateHeureDebut()->format('Y-m-d H:i')?>"class="btn btn-danger">Supprimer</button>
+    <a href="/index.php?action=rdvs" class="btn btn-seconday">Retour à la liste</a>
   </div>
   <?php
     require('footer.html');

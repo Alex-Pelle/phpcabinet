@@ -1,58 +1,38 @@
 <?php $titre = 'Nouvel Usager';
+$css = 'form';
 require_once(__DIR__.'/head.php'); ?>
 <body>
   <?php
     require('header.php');
   ?>
-  <div class="container">
-    <h1>Ajouter un nouvel usager</h1>
-    <div class="container">
+    <h1 id="titre">Ajouter un nouvel usager</h1>
       <form action="/index.php?action=addUsager" method="post">
         <input-field>
         <legend>Identité de l'usager:</legend>
-          <div class="form-group">
-            <label for="prenom">Prénom : <input type="text" name="prenom" id="prenom"></label>
-          </div>
-          <div class="form-group">
-            <label for="nom">Nom : <input type="text" name="nom" id="nom"></label>
-          </div>
-          <div class="form-group">
-            <label for="numero_securite">Numéro de sécurité sociale : <input type="text" name="numero_securite" id="numero_securite"></label>
-          </div>
-          <div class="form-group">
-            <label for="date_naissance">Date de naissance : <input type="date" name="date_naissance" id="date_naissance"></label>
-          </div>
-          <div class="form-group">
-            <label for="lieu_naissance">Lieu de naissance : <input type="text" name="lieu_naissance" id="lieu_naissance"></label>
-          </div>
+            <label for="prenom">Prénom : <input required type="text" name="prenom" id="prenom"></label>
+            <label for="nom">Nom : <input required type="text" name="nom" id="nom"></label>
+            <label for="numero_securite">Numéro de sécurité sociale : <input required type="text" name="numero_securite" id="numero_securite"></label>
+            <label for="date_naissance">Date de naissance : <input required type="date" name="date_naissance" id="date_naissance" max="<?= (new DateTime())->format('Y-m-d')?>"></label>
+            <label for="lieu_naissance">Lieu de naissance : <input required type="text" name="lieu_naissance" id="lieu_naissance"></label>
         </input-field>
-        <input-field class="form-group">
+        <input-field>
           <legend>Civilité de l'usager: </legend>
-            <input type="radio" name="civilite" id="civiliteM" value="H">
-          <label for="civiliteM">
-            M
+          <label class="radio-label" for="civiliteM">
+            M <input type="radio" name="civilite" id="civiliteM" value="H">
           </label>
-            <input type="radio" name="civilite" id="civiliteMme" value="F">
-          <label for="civiliteMme">
-            Mme
+          <label class="radio-label" for="civiliteMme">
+            Mme <input type="radio" name="civilite" id="civiliteMme" value="F">
           </label>
         </input-field>
         <input-field>
         <legend>Adresse</legend>
-        <div class="form-group">
-          <label for="adresse">Adresse <input type="text" name="adresse" id="adresse"></label>
-        </div>
-        <div class="form-group">
-          <label for="code_postal">Code postal <input type="text" name="code_postal" id="code_postal"></label>
-        </div>
-        <div class="form-group">
-          <label for="ville">Ville <input type="text" name="ville" id="ville"></label>
-        </div>
+          <label for="adresse">Adresse <input required type="text" name="adresse" id="adresse"></label>
+          <label for="code_postal">Code postal <input required type="text" name="code_postal" id="code_postal"></label>
+          <label for="ville">Ville <input required type="text" name="ville" id="ville"></label>
         </input-field>
         <input-field>
         <legend>Médecin référent (optionnel)</legend>
-        <div class="form-group">
-          <label for="medecin_referent">Médecin référent : </label>
+          <label for="medecin_referent">Médecin référent : 
           <select name="medecin_referent" id="medecin_referent">
             <option value="">Pas de médecin référent</option>
             <?php
@@ -60,14 +40,11 @@ require_once(__DIR__.'/head.php'); ?>
               echo '<option value="'.$medecin->getPersonne()->getIdPersonne().'">Dr. '.$medecin->getPersonne()->getPrenom().' '.$medecin->getPersonne()->getNom().'</option>';
             }
             ?>
-          </select>
-        </div>
+          </select></label>
         </input-field>
         <input class="btn btn-primary" type="submit" value="Enregistrer">
         <a href="index.php?action=usagers" class="btn btn-seconday">Annuler</a>
       </form>
-    </div>
-  </div>
   <?php
     require('footer.html');
   ?>

@@ -5,7 +5,6 @@ require_once(__DIR__.'/head.php'); ?>
   <?php
     require('header.php');
   ?>
-  <div id="main">
     <h1 id="titre">
       Liste des usagers du cabinet
     </h1>
@@ -17,7 +16,6 @@ require_once(__DIR__.'/head.php'); ?>
         echo '<a class="usager '.$usager->getPersonne()->getCivilite()->name.'" href="/index.php?action=detailUsager&id='.$id.'"><li id="'.$id.'">'.$usager->getPersonne()->getPrenom().' '.$usager->getPersonne()->getNom().' <span>('.$usager->getNumero_securite().')</span></li></a>';
       }?>
     </ul>
-  </div>
   <?php
     require('footer.html');
   ?>

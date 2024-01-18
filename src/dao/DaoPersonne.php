@@ -193,6 +193,7 @@ function update($item) {
 }
 function delete($item) {
     $this->delMedecinReference($item);
+    $this->delRDVByPersonne($item);
     $this->deletePersonne($item);
 }
 
@@ -286,6 +287,14 @@ private function delMedecinReference($item) {
             $valeur->setMedecinReferant(null);
             $this->update($valeur);
         }
+    }
+}
+
+private function delRDVByPersonne($item) {
+    $daoRDV = new DaoRDV($this->connexion);
+    $array = $daoRDV->getRendezVousByPersonne($item);
+    foreach ($array as $cle => $valeur) {
+        $this->delete($valeur);
     }
 }
 }

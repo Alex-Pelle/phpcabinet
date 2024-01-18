@@ -242,6 +242,7 @@ function getStatistiquesMedecins() {
         AND (R2.date_rendez_vous < CURDATE() OR (R2.date_rendez_vous = CURDATE() AND R2.heure_rendez_vous < CURTIME()))
     ) AS SommeDuree
   FROM Personne P
+  WHERE fonction='M'
   ORDER BY SommeDuree DESC");
 $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
 return $tableauSortie;

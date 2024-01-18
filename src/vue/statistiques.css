@@ -1,0 +1,23 @@
+#contenu {
+  display:flex;
+  justify-content: space-evenly;
+}
+
+table {
+  border: 3px solid black;
+  border-collapse: collapse;
+}
+
+td {
+  border: 2px solid black;
+  padding: 5px;
+}
+
+table:last-child>tbody>tr:nth-child(odd) {
+  background-color: rgb(228, 228, 200);
+}
+
+th {
+  border: 2px solid black;
+  padding: 8px;
+}

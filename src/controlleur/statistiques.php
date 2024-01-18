@@ -21,7 +21,7 @@ class ControlleurStatistiques {
     $stats = $daoPersonne->getStatistiquesMedecins();
     $liste = array();
     foreach($stats as $medecin) {
-
+      $liste[$medecin['NomMedecin'].' '.$medecin['PrenomMedecin']] = $medecin['SommeDuree']/60 ;
     }
     require(__DIR__.'/../vue/statistiques.php');
   }

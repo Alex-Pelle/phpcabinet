@@ -104,7 +104,7 @@ elseif (isset($_GET['action']) && $_GET['action'] !== '') {
   } elseif ($_GET['action'] === 'statistiques') {
     ControlleurStatistiques::generate();
   } else {
-    echo "Erreur 404 : la page que vous recherchez n'existe pas.";
+    header('Location: https://www.youtube.com/watch?v=KSOJtKzWLYY');
 	}
 } else {
   require(__DIR__.'/vue/accueil.php');

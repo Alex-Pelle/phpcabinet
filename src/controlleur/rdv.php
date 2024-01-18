@@ -96,8 +96,17 @@ class ControlleurRDV {
       header('Location: /index.php?action=ajoutRdv',true);
       return;
     }
-    $daoRdv->insert($rdv);
+    try {
+      $daoRdv->insert($rdv);
+    }
+    catch (Exception $e) {
+      $_SESSION['notification_message'] = substr($e->getMessage(),40);
+      $_SESSION['notification_color'] = 'red';
+      header('Location: /index.php?action=ajoutRdv',true);
+      return;
+    }
     $_SESSION['notification_message'] = 'Rendez-vous prévu avec succès!';
+    $_SESSION['notification_color'] = 'green';
     header('Location: /index.php?action=rdvs',true);
   }
   public static function update($input) {
@@ -121,8 +130,15 @@ class ControlleurRDV {
       header('Location: /index.php?action=ajoutRdv',true);
       return;
     }
-    $daoRdv->update($rdv);
+    try {
+      $daoRdv->update($rdv);
+    } catch(Exception $e) {
+      $_SESSION['notification_message'] = substr($e->getMessage(),40);
+      $_SESSION['notification_color'] = 'red';
+      header('Location: /index.php?action=ajoutRdv',true);
+    }
     $_SESSION['notification_message'] = 'Rendez-vous modifié avec succès!';
+    $_SESSION['notification_color'] = 'green';
     header('Location: /index.php?action=detailRdv&idMedecin='.$input['idMedecin'].'&idUsager='.$input['idUsager'].'&dateHeure='.$dateTime->format('Y-m-d H:i'),true);
   }
   static function delete($idUsager, $idMedecin, $dateHeure) {

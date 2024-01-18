@@ -63,7 +63,6 @@ class DaoRDV implements Dao {
   }
 
   function insert($item) {
-    try {
         $pdo = $this->connexion->getPDO();
       $insert = $pdo->prepare('INSERT INTO 
           rendez_vous(idUsager , idMedecin, date_rendez_vous , heure_rendez_vous, duree_minute) 
@@ -79,16 +78,11 @@ class DaoRDV implements Dao {
               'heure_rendez_vous' => $item->getDateHeureDebut()->format("H:i:s"),
               'duree_minute' => $item->getDureeEnMinutes()->getNbMinutes()
           ));
-      }
-    } catch(Exception $e) {
-        echo $e->getCode()." : ".$e->getMessage();
-    } 
+    }
   }
 
   function update($item) {
     if($item instanceof RendezVous) {
-        try {
-       
             $pdo = $this->connexion->getPDO();
             $update = $pdo->prepare('UPDATE rendez_vous SET 
                 duree_minute = :duree_minute
@@ -104,12 +98,7 @@ class DaoRDV implements Dao {
                 'heure_rendez_vous' => $item->getDateHeureDebut()->format("H:i:s"),
                 'duree_minute' => $item->getDureeEnMinutes()->getNbMinutes()
             ));
-        
-        } catch(Exception $e) {
-        echo $e->getCode()." : ".$e->getMessage();
-        } 
-    }
-      
+          }
   }
 
   /**

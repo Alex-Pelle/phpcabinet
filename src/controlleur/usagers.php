@@ -83,7 +83,15 @@ class ControlleurUsager {
       header('Location: /index.php?action=ajoutRdv',true);
       return;
     }
-    $dao->insert($usager);
+    try {
+      $dao->insert($usager);
+    }
+    catch (Exception $e) {
+      $_SESSION['notification_message'] = substr($e->getMessage(),40);
+      $_SESSION['notification_color'] = 'red';
+      header('Location: /index.php?action=ajoutUsager',true);
+      return;
+    }
     $_SESSION['notification_message'] = 'Usager '.$input['prenom'].' '.$input['nom'].' créé avec succès!';
     $_SESSION['notification_color'] = 'green';
     header('Location: /index.php?action=usagers',true);
@@ -113,7 +121,14 @@ class ControlleurUsager {
       header('Location: /index.php?action=ajoutRdv',true);
       return;
     }
-    $dao->update($usager);
+    try {
+      $dao->update($usager);
+    }
+    catch (Exception $e) {
+      $_SESSION['notification_message'] = $e->getMessage();
+      $_SESSION['notification_color'] = 'red';
+      header('Location: /index.php?action=modifUsager',true);
+    }
     $_SESSION['notification_message'] = 'Usager '.$input['prenom'].' '.$input['nom'].' modifié avec succès!';
     $_SESSION['notification_color'] = 'green';
     header('Location: /index.php?action=usagers',true);

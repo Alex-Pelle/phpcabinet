@@ -43,7 +43,7 @@ BEGIN
 
         IF v_count > 0 THEN
             SIGNAL SQLSTATE '45002'
-            SET MESSAGE_TEXT = 'Le numero_securite existe déjà dans la table.';
+            SET MESSAGE_TEXT = 'Ce numéro de sécurité sociale est déjà pris par un autre usager.';
         END IF;
     END IF;
 END//
@@ -69,8 +69,8 @@ BEGIN
     );
 
     IF existing_rendezvous > 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Un rendez-vous est programmé dans cet intervalle pour ce medecin et cette personne.';
+        SIGNAL SQLSTATE '45001'
+        SET MESSAGE_TEXT = 'Un rendez-vous est programmé dans cet intervalle pour ce medecin.';
     END IF;
 END//
 DELIMITER ;
@@ -95,7 +95,7 @@ BEGIN
 
     IF existing_rendezvous > 0 THEN
         SIGNAL SQLSTATE '45001'
-        SET MESSAGE_TEXT = 'Un rendez-vous est programmé dans cet intervalle pour ce medecin et cette personne.';
+        SET MESSAGE_TEXT = 'Un rendez-vous est programmé dans cet intervalle pour cet usager.';
     END IF;
 END;
 //

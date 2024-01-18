@@ -5,6 +5,7 @@ require_once(__DIR__.'/head.php'); ?>
     require('header.php');
   ?>
   <h1 id="titre">Statistiques</h1>
+  <h2> Répartition des usagers</h2>
   <table>
     <thead>
       <tr>
@@ -31,6 +32,26 @@ require_once(__DIR__.'/head.php'); ?>
       </tr>
     </tbody>
   </table>
+  <h2>Heures des médecins</h2>
+  <?php
+  echo '<table>
+  <thead>
+      <tr>
+          <th>Médecin</th>
+          <th>Durée totale (heures)</th>
+      </tr>
+  </thead>
+  <tbody>';
+
+  foreach ($liste as $medecin => $dureeTotale) {
+  echo "<tr>
+        <td>$medecin</td>
+        <td>$dureeTotale</td>
+      </tr>";
+  }
+
+  echo '</tbody></table>';
+  ?>
   <?php
     require('footer.html');
   ?>

@@ -10,13 +10,19 @@ require_once(__DIR__.'/../modele/Personne.php');
 
 class ControlleurStatistiques {
   static function generate() {
-    $dao = new DaoPersonne(Connexion::getInstance());
-    $mf = $dao->getFemmeBefore25();
-    $ef = $dao->getFemmeBetween25And50();
-    $pf = $dao->getFemmeAfter50();
-    $mh = $dao->getHommeBefore25();
-    $eh = $dao->getHommeBetween25And50();
-    $ph = $dao->getHommeAfter50();
+    $daoPersonne = new DaoPersonne(Connexion::getInstance());
+    $mf = $daoPersonne->getFemmeBefore25();
+    $ef = $daoPersonne->getFemmeBetween25And50();
+    $pf = $daoPersonne->getFemmeAfter50();
+    $mh = $daoPersonne->getHommeBefore25();
+    $eh = $daoPersonne->getHommeBetween25And50();
+    $ph = $daoPersonne->getHommeAfter50();
+
+    $stats = $daoPersonne->getStatistiquesMedecins();
+    $liste = array();
+    foreach($stats as $medecin) {
+
+    }
     require(__DIR__.'/../vue/statistiques.php');
   }
 }

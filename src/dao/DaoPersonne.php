@@ -280,7 +280,7 @@ private function deletePersonne($cle) {
 }
 
 private function delMedecinReference($item) {
-    $personne = $this->getById($item);
+    $personne = $this->getById($item->getPersonne()->getIdPersonne());
     if($personne instanceof Medecin) {
         $array = $this->getAllUsagerByMedecin($personne->getPersonne()->getIdPersonne());
         foreach ($array as $cle => $valeur) {
@@ -292,7 +292,7 @@ private function delMedecinReference($item) {
 
 private function delRDVByPersonne($item) {
     $daoRDV = new DaoRDV($this->connexion);
-    $array = $daoRDV->getRendezVousByPersonne($item);
+    $array = $daoRDV->getRendezVousByPersonne($item->getPersonne()->getIdPersonne());
     foreach ($array as $cle => $valeur) {
         $this->delete($valeur);
     }

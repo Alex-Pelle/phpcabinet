@@ -22,7 +22,7 @@ class DaoRDV implements Dao {
   }
   function getAll() {
       $pdo = $this->connexion->getPDO();
-      $getAll = $pdo->query('SELECT * FROM rendez_vous');
+      $getAll = $pdo->query('SELECT * FROM rendez_vous ORDER BY date_rendez_vous DESC');
       $resultats = $getAll->fetchAll(PDO::FETCH_ASSOC);
       return $this->lignesEnObjects($resultats);
   }
@@ -145,7 +145,7 @@ class DaoRDV implements Dao {
 
   function getRendezVousByUsager($idPersonne) {
       $pdo = $this->connexion->getPDO();
-      $getAll = $pdo->query("SELECT * FROM rendez_vous WHERE idUsager = $idPersonne");
+      $getAll = $pdo->query("SELECT * FROM rendez_vous WHERE idUsager = $idPersonne ORDER BY date_rendez_vous DESC");
       $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
       $retour = array();
       $daoPersonne = new DaoPersonne($this->connexion);
@@ -163,7 +163,7 @@ class DaoRDV implements Dao {
 
   function getRendezVousByMedecin($idPersonne) {
       $pdo = $this->connexion->getPDO();
-      $getAll = $pdo->query("SELECT * FROM rendez_vous WHERE idMedecin = $idPersonne");
+      $getAll = $pdo->query("SELECT * FROM rendez_vous WHERE idMedecin = $idPersonne ORDER BY date_rendez_vous DESC");
       $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
       $retour = array();
       $daoPersonne = new DaoPersonne($this->connexion);

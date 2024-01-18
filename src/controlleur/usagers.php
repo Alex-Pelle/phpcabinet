@@ -120,7 +120,7 @@ class ControlleurUsager {
   }
   public static function delete($id) {
     $dao = new DaoPersonne(Connexion::getInstance());
-    $dao->delete($id);
+    $dao->delete(intval($id));
     $_SESSION['notification_message'] = 'Usager supprimé avec succès!';
     header('Location: /index.php?action=usagers',true);
   }

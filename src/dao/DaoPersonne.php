@@ -274,13 +274,13 @@ private function deletePersonne($cle) {
     $pdo = $this->connexion->getPDO();
     $delete = $pdo->prepare('DELETE FROM Personne WHERE idPersonne = :idPersonne');
     $delete->bindParam(':idPersonne',$cle,PDO::PARAM_INT);
-    echo $delete->execute(array(
+    $delete->execute(array(
         'idPersonne' => $cle
     ));
 }
 
 private function delMedecinReference($item) {
-    $personne = $this->getById($item->getPersonne()->getIdPersonne());
+    $personne = $this->getById($item);
     if($personne instanceof Medecin) {
         $array = $this->getAllUsagerByMedecin($personne->getPersonne()->getIdPersonne());
         foreach ($array as $cle => $valeur) {
@@ -292,9 +292,14 @@ private function delMedecinReference($item) {
 
 private function delRDVByPersonne($item) {
     $daoRDV = new DaoRDV($this->connexion);
-    $array = $daoRDV->getRendezVousByPersonne($item->getPersonne()->getIdPersonne());
+    $array = $daoRDV->getRendezVousByPersonne($item);
     foreach ($array as $cle => $valeur) {
-        $this->delete($valeur);
+        $daoRDV->delete(array(
+            $valeur->getUsager()->getPersonne()->getIdPersonne(),
+            $valeur->getMedecin()->getPersonne()->getIdPersonne(),
+            $valeur->getDateHeureDebut()->format("Y-m-d"),
+            $valeur->getDateHeureDebut()->format("H:i:s")
+        ));
     }
 }
 }

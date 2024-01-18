@@ -37,7 +37,7 @@ elseif (isset($_GET['action']) && $_GET['action'] !== '') {
   } elseif ($_GET['action'] === 'updateUsager'){
     ControlleurUsager::update($_POST);
   }elseif ($_GET['action'] === 'deleteUsager'){
-    if(isset($_GET['id']) && ControlleurUsager::isUsager($_GET['id'])) {
+    if(isset($_GET['id'])) {
       ControlleurUsager::delete($_GET['id']);
     }
     else {

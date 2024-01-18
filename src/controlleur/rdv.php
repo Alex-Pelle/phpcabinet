@@ -11,7 +11,25 @@ require_once(__DIR__.'/../modele/Personne.php');
 class ControlleurRDV {
   static function liste() {
     $dao = new DAORDV(Connexion::getInstance());
-    $rdvs = $dao->getAll();
+    $daoPersonne = new DaoPersonne(COnnexion::getInstance());
+    if ((empty($_POST['usager']) && empty($_POST['medecin'])) || $_POST['submit'] =='Réinitialiser') {
+      $rdvs = $dao->getAll();
+    }
+    elseif (!empty($_POST['usager']) && empty($_POST['medecin'])) {
+      $usager = $daoPersonne->getById($_POST['usager']);
+      $rdvs = $dao->getRendezVousByPersonne($_POST['usager']);
+    }
+    elseif (empty($_POST['usager']) && !empty($_POST['medecin'])) {
+      $medecin = $daoPersonne->getById($_POST['medecin']);
+      $rdvs = $dao->getRendezVousByPersonne($_POST['medecin']);
+    }
+    elseif (!empty($_POST['usager']) && !empty($_POST['medecin'])) {
+      $usager = $daoPersonne->getById($_POST['usager']);
+      $medecin = $daoPersonne->getById($_POST['medecin']);
+      $rdvs = $dao->getRDVByUsagerAndMedecin($_POST['usager'],$_POST['medecin']);
+    }
+    $medecins = $daoPersonne->getAllMedecins();
+    $usagers = $daoPersonne->getAllUsagers();
     require(__DIR__.'/../vue/listeRdv.php');
   }
   static function ajout() {

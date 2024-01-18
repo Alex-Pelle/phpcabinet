@@ -2,8 +2,8 @@
 require_once(__DIR__.'/head.php'); ?>
 <body>
 <?php
-if(isset($_SESSION['notification_message'])) {
- echo '<p class="notification">'.$_SESSION['notification_message'].'</p>';
+if(isset($_SESSION['notification_message']) && isset($_SESSION['notification_color'])) {
+ echo '<p id="notification" style="background-color:'.$_SESSION['notification_color'].';">'.$_SESSION['notification_message'].'</p>';
 }
 $_SESSION['notification_message'] = null;
 ?>

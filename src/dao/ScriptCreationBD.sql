@@ -112,7 +112,7 @@ VALUES
     ('M', 'Laquet', 'Quentin', 'H', null, null, null, null, null, null, null);
 
 
-    INSERT INTO Personne (fonction, nomPersonne, prenomPersonne, civilite, adresse, ville , code_postal, numero_securite, idMedecin, date_naissance, lieu_de_naissance)
+    INSERT INTO Personne (fonction, prenomPersonne, nomPersonne, civilite, adresse, ville , code_postal, numero_securite, idMedecin, date_naissance, lieu_de_naissance)
 VALUES
     ('U','Léa', 'Dubois', 'F' ,'123 Rue de la Liberté', 'Paris', '75000', '2147532469183', 1, '2014-03-25', 'Nîmes'),
     ('U','Gabriel', 'Martin', 'H', '456 Avenue des Roses', 'Marseille', '13000', '1871311372548', 2, '1987-09-12', 'Saint-Denis'),

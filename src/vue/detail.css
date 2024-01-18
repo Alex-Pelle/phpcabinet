@@ -1,0 +1,19 @@
+#contenu {
+  display:flex;
+  flex-direction: column;
+  margin-top:50px;
+  margin-left:30%;
+  margin-right:auto;
+
+  width: 30%;
+  height: 100%;
+  justify-content: space-between;
+}
+
+p {
+  font-size: 20px;
+}
+.boutons {
+  flex-direction: row;
+  justify-content: space-between;
+}

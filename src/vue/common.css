@@ -4,6 +4,7 @@
 
 body {
   background-color: beige;
+  font-family: 'DM Sans', 'Roboto', sans-serif;
   display: flex;
   flex-direction: column;
   height:100vh;
@@ -11,19 +12,33 @@ body {
 
 header {
   background-color: lightgrey;
+  width:100vw;
+  position:fixed;
 }
 
 nav {
   display:flex;
+  width:100%; 
 }
+
+
+a {
+  color:black;
+  text-decoration: none;
+}
+.no-wrap {
+  text-wrap:nowrap;
+}
+
 
 nav>a {
   margin-left: 25px;
   text-decoration: none;
   font-size: 50px;
   color: black;
-  font-family: sans-serif;
-  font-weight: 600;
+  font-family: 'Impact', sans-serif;
+  letter-spacing: 1px;
+  font-weight: 400;
 }
 
 nav>a:hover {
@@ -57,21 +72,54 @@ nav>ul>li>a:hover {
   font-weight: 700;
 }
 
-#main {
+main {
+  margin-top: 70px;
   display:flex;
   flex-direction:column;
   flex:1;
 }
 
 #titre {
-  margin-left:auto;
-  margin-right:auto;
-  margin: 10px auto;
+  font-size: 50px;
+  font-weight: 540;
+  margin: 70px auto 30px;
+}
+
+.boutons {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.boutons>* {
+  font-size: 20px;
+}
+
+.boutons>input {
+  padding: 10px;
+}
+
+#ajout {
+  margin: 20px auto;
+}
+
+#ajout>p {
+  font-size: 20px;
+  margin:0;
 }
 
 footer {
   background-color: grey;
   margin-top:20px;
-  padding: 10px;
+  padding: 40px;
   text-align: center;
+}
+
+footer>a>h3 {
+  color:black;
+  margin:0;
+}
+footer>a {
+  text-decoration: none;
 }

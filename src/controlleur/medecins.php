@@ -51,6 +51,7 @@ public static function insert($input) {
   }
   $dao->insert($medecin);
   $_SESSION['notification_message'] = 'Médecin '.$input['nom'].' créé avec succès!';
+  $_SESSION['notification_color'] = 'green';
   header('Location: /index.php?action=medecins',true);
 }
 public static function update($input) {
@@ -68,12 +69,14 @@ public static function update($input) {
   }
   $dao->update($medecin);
   $_SESSION['notification_message'] = 'Médecin '.$input['nom'].' modifié avec succès!';
+  $_SESSION['notification_color'] = 'green';
   header('Location: /index.php?action=medecins',true);
 }
 public static function delete($id) {
   $dao = new DaoPersonne(Connexion::getInstance());
   $dao->delete($id);
   $_SESSION['notification_message'] = 'Médecin supprimé avec succès!';
+  $_SESSION['notification_color'] = 'green';
   header('Location: /index.php?action=medecins',true);
 }
 }

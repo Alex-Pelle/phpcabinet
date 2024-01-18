@@ -37,10 +37,8 @@ require_once(__DIR__.'/head.php'); ?>
         <?php
         if (isset($medecin)) {
           echo '<option value="'.$medecin->getPersonne()->getIdPersonne().'">Dr. '.$medecin->getPersonne()->getPrenom().' '.$medecin->getPersonne()->getNom().'</option>';
-        } else {
-          echo '<option value="">Pas de médecin référent</option>';
-          
-        }
+        } 
+        echo '<option value="">Pas de médecin référent</option>';
         foreach($medecins as $medic) {
           if (!isset($medecin) || $medic->getPersonne()->getIdPersonne() != $medecin->getPersonne()->getIdPersonne()) {
             echo '<option value="'.$medic->getPersonne()->getIdPersonne().'">Dr. '.$medic->getPersonne()->getPrenom().' '.$medic->getPersonne()->getNom().'</option>';

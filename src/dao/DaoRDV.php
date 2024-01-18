@@ -190,7 +190,7 @@ class DaoRDV implements Dao {
       }
   }
 
-  function getRDVByUsagerAndMedecin($idmedecin , $idusager) {
+  function getRDVByUsagerAndMedecin($idusager,$idmedecin) {
     $pdo = $this->connexion->getPDO();
     $getAll = $pdo->query("SELECT * FROM rendez_vous WHERE idMedecin = $idmedecin AND idUsager = $idusager ORDER BY date_rendez_vous DESC");
     $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);

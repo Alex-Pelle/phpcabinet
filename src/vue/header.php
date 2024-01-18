@@ -17,7 +17,7 @@
     </ul>
   </nav>
 </header>
-<div id="main">
+<main>
 <?php
 if(isset($_SESSION['notification_message']) && isset($_SESSION['notification_color'])) {
  echo '<p id="notification" style="background-color:'.$_SESSION['notification_color'].';">'.$_SESSION['notification_message'].'</p>';

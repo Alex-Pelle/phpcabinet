@@ -13,7 +13,8 @@ require_once(__DIR__.'/head.php'); ?>
       <?php
         foreach($usagers as $usager) {
           $id = $usager->getPersonne()->getIdPersonne();
-        echo '<a class="usager '.$usager->getPersonne()->getCivilite()->name.'" href="/index.php?action=detailUsager&id='.$id.'"><li id="'.$id.'">'.$usager->getPersonne()->getPrenom().' '.$usager->getPersonne()->getNom().' <span>('.$usager->getNumero_securite().')</span></li></a>';
+          $civilite = $usager->getPersonne()->getCivilite()->name == 'H' ? 'M.' : 'Mme.';
+        echo '<a class="usager '.$usager->getPersonne()->getCivilite()->name.'" href="/index.php?action=detailUsager&id='.$id.'"><li id="'.$id.'">'.$civilite.' '.$usager->getPersonne()->getPrenom().' '.$usager->getPersonne()->getNom().' <span>('.$usager->getNumero_securite().')</span></li></a>';
       }?>
     </ul>
   <?php

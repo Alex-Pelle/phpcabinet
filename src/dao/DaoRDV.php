@@ -189,4 +189,22 @@ class DaoRDV implements Dao {
           return null;
       }
   }
+
+  function getRDVByUsagerAndMedecin($idmedecin , $idusager) {
+    $pdo = $this->connexion->getPDO();
+    $getAll = $pdo->query("SELECT * FROM rendez_vous WHERE idMedecin = $idmedecin AND idUsager = $idusager ORDER BY date_rendez_vous DESC");
+    $tableauSortie = $getAll->fetchAll(PDO::FETCH_ASSOC);
+    $retour = array();
+    $daoPersonne = new DaoPersonne($this->connexion);
+    foreach ($tableauSortie as $cle => $sortie) {
+        $usager = $daoPersonne->getById($sortie['idUsager']);
+        $medecin = $daoPersonne->getById($sortie['idMedecin']);
+        $dateHeure = new DateTime($sortie['date_rendez_vous'].' '.$sortie['heure_rendez_vous']);
+        $duree = new Duree($sortie['duree_minute']); 
+        $rdv = new RendezVous($usager,$medecin,$dateHeure);
+        $rdv->setDureeEnMinutes($duree);
+        array_push($retour,$rdv);
+    }
+    return $retour;
+  }
 }

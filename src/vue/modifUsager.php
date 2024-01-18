@@ -10,31 +10,29 @@ require_once(__DIR__.'/head.php'); ?>
     <input hidden type="text" name="id" value="<?= $id?>">
     <input-field>
     <legend>Identité de l'usager:</legend>
-      <label for="prenom">Prénom : <input type="text" name="prenom" id="prenom" value="<?= $prenom?>"></label>
-      <label for="nom">Nom : <input type="text" name="nom" id="nom" value="<?= $nom?>"></label>
-      <label for="numero_securite">Numéro de sécurité sociale : <input type="text" name="numero_securite" id="numero_securite" value="<?= $securite?>"  ></label>
-      <label for="date_naissance">Date de naissance : <input type="date" name="date_naissance" id="date_naissance" max="<?= (new DateTime())->format('Y-m-d')?>" value="<?= $date_naissance?>"></label>
-      <label for="lieu_naissance">Lieu de naissance : <input type="text" name="lieu_naissance" id="lieu_naissance" value="<?= $lieu_naissance?>" ></label>
+      <label for="prenom">Prénom : <input required type="text" name="prenom" id="prenom" value="<?= $prenom?>"></label>
+      <label for="nom">Nom : <input required type="text" name="nom" id="nom" value="<?= $nom?>"></label>
+      <label for="numero_securite">Numéro de sécurité sociale : <input required type="text" pattern="[0-9]{13}"  name="numero_securite" id="numero_securite" value="<?= $securite?>"  ></label>
+      <label for="date_naissance">Date de naissance : <input required type="date" name="date_naissance" id="date_naissance" max="<?= (new DateTime())->format('Y-m-d')?>" value="<?= $date_naissance?>"></label>
+      <label for="lieu_naissance">Lieu de naissance : <input required type="text" name="lieu_naissance" id="lieu_naissance" value="<?= $lieu_naissance?>" ></label>
     <input-field>
       <legend>Civilité de l'usager: </legend>
-        <input type="radio" name="civilite" id="civiliteM" value="M" <?= $isHomme? 'checked="checked"':''?>>
-      <label for="civiliteM">
-        M
+      <label class="radio-label" for="civiliteM">
+        <input type="radio" name="civilite" id="civiliteM" value="M" <?= $isHomme? 'checked="checked"':''?>> M
       </label>
-        <input type="radio" name="civilite" id="civiliteMme" value="Mme" <?= $isHomme? '':'checked="checked"'?>>
-      <label for="civiliteMme">
-        Mme
+      <label class="radio-label"   for="civiliteMme">
+        <input type="radio" name="civilite" id="civiliteMme" value="Mme" <?= $isHomme? '':'checked="checked"'?>> Mme 
       </label>
     </input-field>
     <input-field>
     <legend>Adresse</legend>
-      <label for="adresse">Adresse <input type="text" name="adresse" id="adresse" value="<?= $adresse?>"></label>
-      <label for="code_postal">Code postal <input type="text" name="code_postal" id="code_postal" value="<?= $cp?>"></label>
-      <label for="ville">Ville <input type="text" name="ville" id="ville" value="<?= $ville?>"></label>
+      <label for="adresse">Adresse <input required type="text" name="adresse" id="adresse" value="<?= $adresse?>"></label>
+      <label for="code_postal">Code postal <input required type="text" pattern="[0-9]{5}"  name="code_postal" id="code_postal" value="<?= $cp?>"></label>
+      <label for="ville">Ville <input required type="text" name="ville" id="ville" value="<?= $ville?>"></label>
     </input-field>
     <input-field>
     <legend>Médecin référent (optionnel)</legend>
-      <label for="medecin_referent">Médecin référent : </label>
+      <label for="medecin_referent">Médecin référent :
       <select name="medecin_referent" id="medecin_referent">
         <?php
         if (isset($medecin)) {
@@ -50,9 +48,12 @@ require_once(__DIR__.'/head.php'); ?>
         }
         ?>
       </select>
+      </label>
     </input-field>
-    <input class="btn btn-primary" type="submit" value="Enregistrer">
-    <a href="/index.php?action=detailUsager&id=<?= $id?>" class="btn btn-seconday">Annuler</a>
+    <div class="boutons">
+      <input class="btn btn-primary" type="submit" value="Enregistrer">
+      <a href="/index.php?action=detailUsager&id=<?= $id?>" class="btn btn-secondary">Annuler</a>
+    </div>
   </form>
   <?php
     require('footer.html');

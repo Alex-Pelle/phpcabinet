@@ -30,7 +30,7 @@ require_once(__DIR__.'/head.php'); ?>
     }?>
     <a href="/index.php?action=modifUsager&id=<?=$id?>" class="btn btn-primary">Modifier</button>
     <a href="/index.php?action=deleteUsager&id=<?=$id?>" class="btn btn-danger">Supprimer</button>
-    <a href="/index.php?action=usagers" class="btn btn-seconday">Retour à la liste</a>
+    <a href="/index.php?action=usagers" class="btn btn-secondary">Retour à la liste</a>
   </div>
   <?php
     require('footer.html');

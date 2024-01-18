@@ -11,23 +11,23 @@ require_once(__DIR__.'/head.php'); ?>
         <legend>Identité de l'usager:</legend>
             <label for="prenom">Prénom : <input required type="text" name="prenom" id="prenom"></label>
             <label for="nom">Nom : <input required type="text" name="nom" id="nom"></label>
-            <label for="numero_securite">Numéro de sécurité sociale : <input required type="text" name="numero_securite" id="numero_securite"></label>
+            <label for="numero_securite">Numéro de sécurité sociale : <input required type="text" pattern="[0-9]{13}" name="numero_securite" id="numero_securite"></label>
             <label for="date_naissance">Date de naissance : <input required type="date" name="date_naissance" id="date_naissance" max="<?= (new DateTime())->format('Y-m-d')?>"></label>
             <label for="lieu_naissance">Lieu de naissance : <input required type="text" name="lieu_naissance" id="lieu_naissance"></label>
         </input-field>
         <input-field>
           <legend>Civilité de l'usager: </legend>
           <label class="radio-label" for="civiliteM">
-            M <input type="radio" name="civilite" id="civiliteM" value="H">
+            <input type="radio" name="civilite" id="civiliteM" value="H"> M
           </label>
           <label class="radio-label" for="civiliteMme">
-            Mme <input type="radio" name="civilite" id="civiliteMme" value="F">
+            <input type="radio" name="civilite" id="civiliteMme" value="F"> Mme
           </label>
         </input-field>
         <input-field>
         <legend>Adresse</legend>
           <label for="adresse">Adresse <input required type="text" name="adresse" id="adresse"></label>
-          <label for="code_postal">Code postal <input required type="text" name="code_postal" id="code_postal"></label>
+          <label for="code_postal">Code postal <input required type="text" pattern="[0-9]{5}" name="code_postal" id="code_postal"></label>
           <label for="ville">Ville <input required type="text" name="ville" id="ville"></label>
         </input-field>
         <input-field>
@@ -42,8 +42,10 @@ require_once(__DIR__.'/head.php'); ?>
             ?>
           </select></label>
         </input-field>
-        <input class="btn btn-primary" type="submit" value="Enregistrer">
-        <a href="index.php?action=usagers" class="btn btn-seconday">Annuler</a>
+        <div class="boutons">
+          <input class="btn btn-primary" type="submit" value="Enregistrer">
+          <a href="index.php?action=usagers" class="btn btn-secondary">Annuler</a>
+        </div>
       </form>
   <?php
     require('footer.html');

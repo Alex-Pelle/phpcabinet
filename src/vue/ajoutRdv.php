@@ -30,12 +30,12 @@ require_once(__DIR__.'/head.php'); ?>
           </select>
         </input-field>
         <input-field>
-            <label for="date">Date : <input type="date" name="date" id="date" min="<?= (new DateTime())->format('Y-m-d')?>"></label>
-            <label for="heure">Heure : <input type="time" name="heure" id="heure"></label>
-            <label for="duree">Durée (en minutes): <input type="number" name="duree" id="duree" value="30"></label>
+            <label for="date">Date : <input required type="date" name="date" id="date" min="<?= (new DateTime())->format('Y-m-d')?>"></label>
+            <label for="heure">Heure : <input required type="time" name="heure" id="heure"></label>
+            <label for="duree">Durée (en minutes): <input required type="number" name="duree" id="duree" value="30"></label>
         </input-field>
         <input class="btn btn-primary" type="submit" value="Enregistrer">
-        <a href="/index.php?action=rdvs" class="btn btn-seconday">Annuler</a>
+        <a href="/index.php?action=rdvs" class="btn btn-secondary">Annuler</a>
       </form>
   <?php
     require('footer.html');

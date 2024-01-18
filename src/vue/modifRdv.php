@@ -23,7 +23,7 @@ require_once(__DIR__.'/head.php'); ?>
         <h2>Date:</h2>
         <p>Date: <?= $date?></p>
         <p>Heure: <?= $heure?></p>
-        <label for="duree">Durée (en minutes): <input type="number" name="duree" id="duree" value="<?= $duree?>"></label>
+        <label for="duree">Durée (en minutes): <input required type="number" name="duree" id="duree" value="<?= $duree?>"></label>
       </div>
       <input hidden type="number" name="idUsager" id="idUsager" value="<?= $idUsager?>">
       <input hidden type="number" name="idMedecin" id="idMedecin" value="<?= $idMedecin?>">

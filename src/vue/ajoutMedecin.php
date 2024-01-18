@@ -9,20 +9,22 @@ require_once(__DIR__.'/head.php'); ?>
       <form action="/index.php?action=addMedecin" method="post">
         <input-field>
         <legend>Identité du médecin:</legend>
-            <label for="prenom">Prénom : <input type="text" name="prenom" id="prenom"></label>
-            <label for="nom">Nom : <input type="text" name="nom" id="nom"></label>
+            <label for="prenom">Prénom : <input required type="text" name="prenom" id="prenom"></label>
+            <label for="nom">Nom : <input required type="text" name="nom" id="nom"></label>
         </input-field>
         <input-field>
           <legend>Civilité du médecin: </legend>
           <label class="radio-label" for="civiliteM">
-            M <input type="radio" name="civilite" id="civiliteM" value="H">
+            <input type="radio" name="civilite" id="civiliteM" value="H"> M
           </label>
           <label class="radio-label" for="civiliteMme">
-            Mme  <input type="radio" name="civilite" id="civiliteMme" value="F">
+            <input type="radio" name="civilite" id="civiliteMme" value="F"> Mme
           </label>
         </input-field>
-        <input class="btn btn-primary" type="submit" value="Enregistrer">
-        <a href="/index.php?action=medecins" class="btn btn-seconday">Annuler</a>
+        <div class="boutons">
+          <input class="btn btn-primary" type="submit" value="Enregistrer">
+          <a href="/index.php?action=medecins" class="btn btn-secondary">Annuler</a>
+        </div>
       </form>
     </div>
   </div>

@@ -1,4 +1,3 @@
 # phpcabinetlevrai
-url de connexion : https://phpcabinet.gamingdy.fr
-Login: user_iut
-Mot de passe: $iutinfo
+Projet de développement d'un site web de gestion d'un cabinet médical.
+Dans le cadre du BUT Informatique.

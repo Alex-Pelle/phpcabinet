@@ -1,10 +1,10 @@
 <?php $titre = 'Détails Dr. '.$nom;
 $css = 'detail';
-require_once(__DIR__.'//../common/head.php'); ?>
+require_once(__DIR__.'/../common/head.php'); ?>
 </head>
 <body>
   <?php
-    require(__DIR__.'/..//../common/header.php');
+    require(__DIR__.'/../common/header.php');
   ?>
   <h1 id="titre">Détails du médecin <?=$prenom.' '.$nom?></h1>
   <div id="contenu">

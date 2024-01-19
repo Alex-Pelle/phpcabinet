@@ -1,6 +1,6 @@
 <?php $titre = 'Médecins';
 $css = 'medecins';
-require_once(__DIR__.'//../common/head.php'); ?>
+require_once(__DIR__.'/../common/head.php'); ?>
 <body>
   <?php
     require(__DIR__.'/../common/header.php');

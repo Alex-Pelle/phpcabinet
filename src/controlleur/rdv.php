@@ -131,7 +131,13 @@ class ControlleurRDV {
       return;
     }
     try {
-      $daoRdv->update($rdv);
+      if ($input['oldDate'] != $input['date'] || $input['oldHeure'] != $input['heure'] || $input['oldIdUsager'] != $input['idUsager'] || $input['oldIdMedecin'] != $input['idMedecin']) {
+        $daoRdv->delete(array($input['oldIdUsager'],$input['oldIdMedecin'],$input['oldDate'],$input['oldHeure']));
+        $daoRdv->insert($rdv);
+      }
+      else {
+        $daoRdv->update($rdv);
+      }
     } catch(Exception $e) {
       $_SESSION['notification_message'] = substr($e->getMessage(),40);
       $_SESSION['notification_color'] = 'red';

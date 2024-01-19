@@ -19,7 +19,7 @@ class ControlleurUsager {
   static function ajout() {
     $dao = new DAOPersonne(Connexion::getInstance());
     $medecins = $dao->getAllMedecins();
-    require(__DIR__.'/../vue/usager/ajout');
+    require(__DIR__.'/../vue/usager/ajoutUsager.php');
   }
   static function detail($id) {
     $dao = new DAOPersonne(Connexion::getInstance());

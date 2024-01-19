@@ -1,6 +1,6 @@
 <?php $titre = 'Détails '.$dateHeure;
 $css ='detail';
-require_once(__DIR__.'//../common/head.php'); ?>
+require_once(__DIR__.'/../common/head.php'); ?>
 </head>
 <body>
   <?php

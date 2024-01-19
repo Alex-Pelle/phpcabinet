@@ -57,8 +57,10 @@ public static function insert($input) {
 public static function update($input) {
   $dao = new DaoPersonne(Connexion::getInstance());
   try {
+    $medecin = 
     $medecin = new Medecin(
       new Personne($input['nom'], $input['prenom'], Civilite::valueOf($input['civilite'])));
+    $medecin->getPersonne()->setIdPersonne($input['id']);
 
   }
   catch (Exception $e) {
@@ -68,7 +70,7 @@ public static function update($input) {
     return;
   }
   $dao->update($medecin);
-  $_SESSION['notification_message'] = 'Médecin '.$input['nom'].' modifié avec succès!';
+  $_SESSION['notification_message'] = 'Médecin '.$input['prenom'].' '.$input['nom'].' modifié avec succès!';
   $_SESSION['notification_color'] = 'green';
   header('Location: /index.php?action=medecins',true);
 }

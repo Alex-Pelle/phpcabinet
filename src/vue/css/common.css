@@ -1,10 +1,10 @@
 * {
   box-sizing:border-box;
+  font-family: 'DM Sans', 'Roboto', sans-serif;
 }
 
 body {
   background-color: beige;
-  font-family: 'DM Sans', 'Roboto', sans-serif;
   display: flex;
   flex-direction: column;
   height:100vh;
@@ -116,10 +116,13 @@ footer {
   text-align: center;
 }
 
-footer>a>h3 {
+footer h3 {
   color:black;
   margin:0;
 }
-footer>a {
-  text-decoration: none;
+footer a {
+  text-decoration: underline;
+}
+footer a:hover {
+  color: unset;
 }

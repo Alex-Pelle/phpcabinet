@@ -1,9 +1,9 @@
 <?php $titre = 'Modification '.$prenom.' '.$nom;
 $css = 'form';
-require_once(__DIR__.'/head.php'); ?>
+require_once(__DIR__.'//../common/head.php'); ?>
 <body>
   <?php
-    require('header.php');
+    require(__DIR__.'/../common/header.php');
   ?>
   <div class="container">
     <h1 id="titre">Modification du médecin <?= $prenom.' '.$nom?></h1>
@@ -36,7 +36,7 @@ require_once(__DIR__.'/head.php'); ?>
     </div>
   </div>
   <?php
-    require('footer.html');
+    require(__DIR__.'/../common/footer.html');
   ?>
 </body>
 </html>

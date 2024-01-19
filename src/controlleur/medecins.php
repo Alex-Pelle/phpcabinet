@@ -13,12 +13,12 @@ class ControlleurMedecin {static function isMedecin($id) {
 static function liste() {
   $dao = new DAOPersonne(Connexion::getInstance());
   $medecins = $dao->getAllMedecins();
-  require(__DIR__.'/../vue/listeMedecins.php');
+  require(__DIR__.'/../vue/medecin/listeMedecins.php');
 }
 static function ajout() {
   $dao = new DAOPersonne(Connexion::getInstance());
   $medecins = $dao->getAllMedecins();
-  require(__DIR__.'/../vue/ajoutMedecin.php');
+  require(__DIR__.'/../vue/medecin/ajoutMedecin.php');
 }
 static function detail($id) {
   $dao = new DAOPersonne(Connexion::getInstance());
@@ -26,7 +26,7 @@ static function detail($id) {
   $nom = $medecin->getPersonne()->getNom();
   $prenom = $medecin->getPersonne()->getPrenom();
   $civilite = $medecin->getPersonne()->getCivilite() == Civilite::H ? 'Homme' : 'Femme';
-  require(__DIR__.'/../vue/detailMedecin.php');
+  require(__DIR__.'/../vue/medecin/detailMedecin.php');
 }
 static function modif($id) {
   $dao = new DAOPersonne(Connexion::getInstance());
@@ -34,7 +34,7 @@ static function modif($id) {
   $nom = $medecin->getPersonne()->getNom();
   $prenom = $medecin->getPersonne()->getPrenom();
   $isHomme = $medecin->getPersonne()->getCivilite() == Civilite::H;
-  require(__DIR__.'/../vue/modifMedecin.php');
+  require(__DIR__.'/../vue/medecin/modifMedecin.php');
 }
 
 public static function insert($input) {

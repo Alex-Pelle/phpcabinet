@@ -7,8 +7,14 @@ require_once(__DIR__.'/controlleur/rdv.php');
 require_once(__DIR__.'/controlleur/statistiques.php');
 require_once(__DIR__.'/controlleur/login.php');
 
-if (isset($_GET['action']) && $_GET['action'] === 'login') {
+if (isset($_GET['action']) && $_GET['action'] === '404Error') {
+  require(__DIR__.'/vue/404.php');
+}
+elseif (isset($_GET['action']) && $_GET['action'] === 'login') {
   ControlleurLogin::login($_POST);
+}
+elseif (isset($_GET['action']) && $_GET['action'] === 'logout') {
+  ControlleurLogin::logout();
 }
 elseif (!$_SESSION['logged']) {
   ControlleurLogin::afficher();
@@ -104,7 +110,7 @@ elseif (isset($_GET['action']) && $_GET['action'] !== '') {
   } elseif ($_GET['action'] === 'statistiques') {
     ControlleurStatistiques::generate();
   } else {
-    header('Location: https://www.youtube.com/watch?v=KSOJtKzWLYY');
+    require(__DIR__.'/vue/404.php');
 	}
 } else {
   require(__DIR__.'/vue/accueil.php');

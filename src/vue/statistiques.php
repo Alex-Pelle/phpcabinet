@@ -1,9 +1,9 @@
 <?php $titre = 'Statistiques';
 $css = 'statistiques';
-require_once(__DIR__.'/head.php'); ?>
+require_once(__DIR__.'/common/head.php'); ?>
 <body>
   <?php
-    require('header.php');
+    require(__DIR__.'/common/header.php');
   ?>
   <h1 id="titre">Statistiques</h1>
   <div id="contenu">
@@ -61,7 +61,7 @@ require_once(__DIR__.'/head.php'); ?>
     </div>
   </div>
   <?php
-    require('footer.html');
+    require(__DIR__.'/common/footer.html');
   ?>
 </body>
 </html>

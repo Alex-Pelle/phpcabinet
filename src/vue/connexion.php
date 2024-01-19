@@ -1,5 +1,6 @@
 <?php $titre = 'Authentification';
-require_once(__DIR__.'/head.php'); ?>
+$css = 'connexion';
+require_once(__DIR__.'/common/head.php'); ?>
 <body>
 <?php
 if(isset($_SESSION['notification_message']) && isset($_SESSION['notification_color'])) {
@@ -7,12 +8,13 @@ if(isset($_SESSION['notification_message']) && isset($_SESSION['notification_col
 }
 $_SESSION['notification_message'] = null;
 ?>
-  <div id="main">
+  <main>
     <form action="index.php?action=login" method="post">
+      <h1>Authentification</h1>
       <label for="login">Identifiant : <input type="text" name="login" id="login"></label>
       <label for="pwd">Mot de passe : <input type="password" name="pwd" id="pwd"></label>
-      <input type="submit" value="S'authentifier">
+      <input class="btn btn-outline-primary" type="submit" value="S'authentifier">
     </form>
-  </div>
+</main>
 </body>
 </html>

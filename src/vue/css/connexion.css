@@ -1,0 +1,35 @@
+main {
+  align-items: center;
+}
+
+form {
+  margin-top:25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  border: 1px solid black;
+  border-radius: 15px;
+  padding: 25px;
+  background-color:aliceblue;
+}
+
+form h1 {
+  margin:0 auto 25px;
+}
+form label {
+  margin-bottom: 20px;
+  font-size: 25px;
+}
+
+label input {
+  width: 100%;
+}
+
+form {
+  font-size: 25px;
+}
+
+form>input[type="submit"] {
+  font-size: 25px;
+}

@@ -16,4 +16,10 @@ class ControlleurLogin {
       header('Location: /');
     }
   }
+  static function logout() {
+   $_SESSION['logged'] = false;
+   $_SESSION['notification_message'] = 'Déconnexion réussie';
+   $_SESSION['notification_color'] = 'green';
+   header('Location: /');
+  }
 }

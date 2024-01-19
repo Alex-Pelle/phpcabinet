@@ -9,6 +9,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <title><?= $titre?></title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="stylesheet"  href="/vue/common.css">
-  <link rel="stylesheet"  href="/vue/<?= $css?>.css">
+  <link rel="stylesheet"  href="/vue/css/common.css">
+  <link rel="stylesheet"  href="/vue/css/<?= $css?>.css">
 </head>

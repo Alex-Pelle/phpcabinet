@@ -14,12 +14,12 @@ class ControlleurUsager {
   static function liste() {
     $dao = new DAOPersonne(Connexion::getInstance());
     $usagers = $dao->getAllUsagers();
-    require(__DIR__.'/../vue/listeUsagers.php');
+    require(__DIR__.'/../vue/usager/listeUsagers.php');
   }
   static function ajout() {
     $dao = new DAOPersonne(Connexion::getInstance());
     $medecins = $dao->getAllMedecins();
-    require(__DIR__.'/../vue/ajoutUsager.php');
+    require(__DIR__.'/../vue/usager/ajout');
   }
   static function detail($id) {
     $dao = new DAOPersonne(Connexion::getInstance());
@@ -35,7 +35,7 @@ class ControlleurUsager {
     $ville = $usager->getVille();
     $medecin = $usager->getMedecinReferant();
     $medecins = $dao->getAllMedecins();
-    require(__DIR__.'/../vue/detailUsager.php');
+    require(__DIR__.'/../vue/usager/detailUsager.php');
   }
   static function modif($id) {
     $dao = new DAOPersonne(Connexion::getInstance());
@@ -51,7 +51,7 @@ class ControlleurUsager {
     $ville = $usager->getVille();
     $medecin = $usager->getMedecinReferant();
     $medecins = $dao->getAllMedecins();
-    require(__DIR__.'/../vue/modifUsager.php');
+    require(__DIR__.'/../vue/usager/modifUsager.php');
   }
 
   public static function insert($input) {

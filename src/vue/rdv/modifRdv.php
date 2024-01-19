@@ -1,10 +1,10 @@
 <?php $titre = 'Détails '.$dateHeure;
 $css = 'form';
-require_once(__DIR__.'/head.php'); ?>
+require_once(__DIR__.'//../common/head.php'); ?>
 </head>
 <body>
   <?php
-    require('header.php');
+    require(__DIR__.'/../common/header.php');
   ?>
   <form action="/index.php?action=updateRdv" method="post">
     <div class="container">
@@ -36,7 +36,7 @@ require_once(__DIR__.'/head.php'); ?>
     </form>
   </div>
   <?php
-    require('footer.html');
+    require(__DIR__.'/../common/footer.html');
   ?>
 </body>
 </html>

@@ -1,9 +1,9 @@
 <?php $titre = 'Nouveau rendez-vous';
 $css = 'form';
-require_once(__DIR__.'/head.php'); ?>
+require_once(__DIR__.'//../common/head.php'); ?>
 <body>
   <?php
-    require('header.php');
+    require(__DIR__.'/../common/header.php');
   ?>
     <h1 id="titre">Enregistrer un rendez-vous</h1>
       <form action="/index.php?action=addRdv" method="post">
@@ -38,7 +38,7 @@ require_once(__DIR__.'/head.php'); ?>
         <a href="/index.php?action=rdvs" class="btn btn-secondary">Annuler</a>
       </form>
   <?php
-    require('footer.html');
+    require(__DIR__.'/../common/footer.html');
   ?>
 </body>
 </html>

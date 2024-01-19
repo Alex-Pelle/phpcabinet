@@ -1,9 +1,9 @@
 <?php $titre = 'Cabinet';
 $css = 'accueil';
-require_once(__DIR__.'/head.php'); ?>
+require_once(__DIR__.'/common/head.php'); ?>
 <body>
   <?php
-    require(__DIR__.'/header.php');
+    require(__DIR__.'/common/header.php');
   ?>
   <h1 id="titre">Bienvenue sur le site de gestion du PHPCabinet!</h1>
   <div id="listes">
@@ -12,7 +12,7 @@ require_once(__DIR__.'/head.php'); ?>
     <a href='/index.php?action=medecins'><h2>Liste des medecins</h2></a>
   </div>
   <?php
-    require(__DIR__.'/footer.html');
+    require(__DIR__.'/common/footer.html');
   ?>
 </body>
 </html>

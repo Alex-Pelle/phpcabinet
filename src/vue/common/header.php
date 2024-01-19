@@ -14,6 +14,9 @@
       <li class="">
         <a class="" href="/index.php?action=statistiques">Statistiques</a>
       </li>
+      <li class="">
+        <a class="" href="/index.php?action=logout">Déconnexion</a>
+      </li>
     </ul>
   </nav>
 </header>

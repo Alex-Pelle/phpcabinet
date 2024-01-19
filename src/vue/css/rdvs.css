@@ -16,6 +16,11 @@
   border: 2px solid black;
   border-radius: 10px;
 }
+
+#liste>a:hover {
+  color:unset;
+  background-color: rgb(238, 238, 210);
+}
 .bold {
   font-weight: 600;
 }
@@ -24,8 +29,14 @@ form {
   width: 70%;
   margin: 20px auto;
   display:flex;
-  flex-direction: column;
+  flex-direction: row;
   padding: 0 10px;
+  justify-content: flex-start;
+}
+
+.boutons {
+  margin:0;
+  flex:1
 }
 
 legend {
@@ -35,15 +46,7 @@ legend {
 input-field {
   display:flex;
   flex-direction: row;
+  justify-content:space-between;
+  align-items: center;
   flex-wrap:wrap;
-}
-
-label:last-child {
-  margin-left:30px;
-}
-
-.boutons {
-  width:30%;
-  justify-content: space-evenly;
-  margin-top: 30px;
 }

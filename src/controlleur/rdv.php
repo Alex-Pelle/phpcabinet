@@ -30,13 +30,13 @@ class ControlleurRDV {
     }
     $medecins = $daoPersonne->getAllMedecins();
     $usagers = $daoPersonne->getAllUsagers();
-    require(__DIR__.'/../vue/listeRdv.php');
+    require(__DIR__.'/../vue/rdv/listeRdv.php');
   }
   static function ajout() {
     $dao = new DAOPersonne(Connexion::getInstance());
     $medecins = $dao->getAllMedecins();
     $usagers = $dao->getAllUsagers();
-    require(__DIR__.'/../vue/ajoutRdv.php');
+    require(__DIR__.'/../vue/rdv/ajoutRdv.php');
   }
   static function detail($idUsager, $idMedecin, $dateHeure) {
     $daoPersonne = new DAOPersonne(Connexion::getInstance());
@@ -53,7 +53,7 @@ class ControlleurRDV {
     $heure = (new DateTime($dateHeure))->format('H:i');
     $rdv = $daoRdv->getById(array($idUsager,$idMedecin,substr($dateHeure,0,10),$heure.':00'));
     $duree = $rdv->getDureeEnMinutes()->getNbMinutes();
-    require(__DIR__.'/../vue/detailRdv.php');
+    require(__DIR__.'/../vue/rdv/detailRdv.php');
   }
   static function modif($idUsager, $idMedecin, $dateHeure) {
     $daoPersonne = new DAOPersonne(Connexion::getInstance());
@@ -71,7 +71,7 @@ class ControlleurRDV {
     $heure = (new DateTime($dateHeure))->format('H:i');
     $rdv = $daoRdv->getById(array($idUsager,$idMedecin,substr($dateHeure,0,10),$heure.':00'));
     $duree = $rdv->getDureeEnMinutes()->getNbMinutes();
-    require(__DIR__.'/../vue/modifRdv.php');
+    require(__DIR__.'/../vue/rdv/modifRdv.php');
   }
 
   public static function insert($input) {

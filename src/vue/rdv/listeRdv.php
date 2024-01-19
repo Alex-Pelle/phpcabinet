@@ -30,12 +30,12 @@ require_once(__DIR__.'/../common/head.php'); ?>
       <select name="usager" id="usager">
         <?php
         if (isset($usager)) {
-          echo '<option value="'.$usager->getPersonne()->getIdPersonne().'">'.$usager->getPersonne()->getPrenom().' '.$usager->getPersonne()->getNom().'</option>';
+          echo '<option value="'.$usager->getPersonne()->getIdPersonne().'">'.$usager->getPersonne()->getPrenom().' '.$usager->getPersonne()->getNom().' ('.$usager->getNumero_securite().')</option>';
         } 
         echo '<option value="">Tous les usagers</option>';
         foreach($usagers as $user) {
           if (!isset($usager) || $user->getPersonne()->getIdPersonne() != $usager->getPersonne()->getIdPersonne()) {
-            echo '<option value="'.$user->getPersonne()->getIdPersonne().'">'.$user->getPersonne()->getPrenom().' '.$user->getPersonne()->getNom().'</option>';
+            echo '<option value="'.$user->getPersonne()->getIdPersonne().'">'.$user->getPersonne()->getPrenom().' '.$user->getPersonne()->getNom().' ('.$user->getNumero_securite().')</option>';
           }
         }
         ?>

@@ -69,6 +69,8 @@ class ControlleurRDV {
     $date = (new DateTime($dateHeure))->format('d/m/Y');
     $dateFormatee = (new DateTime($dateHeure))->format('Y-m-d');
     $heure = (new DateTime($dateHeure))->format('H:i');
+    $usagers = $daoPersonne->getAllUsagers();
+    $medecins = $daoPersonne->getAllMedecins();
     $rdv = $daoRdv->getById(array($idUsager,$idMedecin,substr($dateHeure,0,10),$heure.':00'));
     $duree = $rdv->getDureeEnMinutes()->getNbMinutes();
     require(__DIR__.'/../vue/rdv/modifRdv.php');

@@ -1,4 +1,4 @@
-<?php $titre = 'Détails '.$dateHeure;
+<?php $titre = 'Modification '.$dateHeure;
 $css = 'form';
 require_once(__DIR__.'/../common/head.php'); ?>
 </head>
@@ -8,7 +8,7 @@ require_once(__DIR__.'/../common/head.php'); ?>
   ?>
   <form action="/index.php?action=updateRdv" method="post">
     <div class="container">
-      <h1 id="titre">Détails de ce rendez-vous</h1>
+      <h1 id="titre">Modification de ce rendez-vous</h1>
       <input-field>
         <legend>Médecin:</legend>
         <select name="idMedecin" id="idMedecin">
@@ -16,7 +16,6 @@ require_once(__DIR__.'/../common/head.php'); ?>
           if (isset($medecin)) {
             echo '<option value="'.$medecin->getPersonne()->getIdPersonne().'">Dr. '.$medecin->getPersonne()->getPrenom().' '.$medecin->getPersonne()->getNom().'</option>';
           } 
-          echo '<option value="">Tous les médecins</option>';
           foreach($medecins as $medic) {
             if (!isset($medecin) || $medic->getPersonne()->getIdPersonne() != $medecin->getPersonne()->getIdPersonne()) {
               echo '<option value="'.$medic->getPersonne()->getIdPersonne().'">Dr. '.$medic->getPersonne()->getPrenom().' '.$medic->getPersonne()->getNom().'</option>';
@@ -30,12 +29,11 @@ require_once(__DIR__.'/../common/head.php'); ?>
         <select name="idUsager" id="idUsager">
           <?php
           if (isset($usager)) {
-            echo '<option value="'.$usager->getPersonne()->getIdPersonne().'">'.$usager->getPersonne()->getPrenom().' '.$usager->getPersonne()->getNom().'</option>';
+            echo '<option value="'.$usager->getPersonne()->getIdPersonne().'">'.$usager->getPersonne()->getPrenom().' '.$usager->getPersonne()->getNom().' ('.$usager->getNumero_securite().')</option>';
           } 
-          echo '<option value="">Tous les usagers</option>';
           foreach($usagers as $user) {
             if (!isset($usager) || $user->getPersonne()->getIdPersonne() != $usager->getPersonne()->getIdPersonne()) {
-              echo '<option value="'.$user->getPersonne()->getIdPersonne().'">'.$user->getPersonne()->getPrenom().' '.$user->getPersonne()->getNom().'</option>';
+              echo '<option value="'.$user->getPersonne()->getIdPersonne().'">'.$user->getPersonne()->getPrenom().' '.$user->getPersonne()->getNom().' ('.$usager->getNumero_securite().')</option>';
             }
           }
           ?>

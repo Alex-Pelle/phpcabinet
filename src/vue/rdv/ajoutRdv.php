@@ -13,7 +13,7 @@ require_once(__DIR__.'/../common/head.php'); ?>
             <option value="">Veuillez choisir l'usager</option>
             <?php
               foreach ($usagers as $usager) {
-                echo '<option value="'.$usager->getPersonne()->getIdPersonne().'">'.$usager->getPersonne()->getPrenom().' '.$usager->getPersonne()->getNom().'</option>';
+                echo '<option value="'.$usager->getPersonne()->getIdPersonne().'">'.$usager->getPersonne()->getPrenom().' '.$usager->getPersonne()->getNom().' ('.$usager->getNumero_securite().')</option>';
               }
             ?>
           </select>

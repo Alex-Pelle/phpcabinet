@@ -4,7 +4,7 @@ require_once(__DIR__.'/common/head.php'); ?>
 <body>
 <?php
 if(isset($_SESSION['notification_message']) && isset($_SESSION['notification_color'])) {
- echo '<p id="notification" style="background-color:'.$_SESSION['notification_color'].';">'.$_SESSION['notification_message'].'</p>';
+ echo '<p id="notification" style="position:fixed; width:100vw; background-color:'.$_SESSION['notification_color'].';">'.$_SESSION['notification_message'].'</p>';
 }
 $_SESSION['notification_message'] = null;
 ?>

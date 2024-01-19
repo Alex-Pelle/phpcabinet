@@ -1,5 +1,13 @@
 <?php
 session_start();
+//detruit la session si innactive depuis plus de 10 minutes
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600)) {
+  session_unset();     
+  session_destroy();   
+  $_SESSION['notification_message'] = 'Votre session a expiré pour inctivité de plus de 10 minutes';
+  $_SESSION['notification_color'] = 'red';
+}
+$_SESSION['LAST_ACTIVITY'] = time();
 $_SESSION['logged'] = isset($_SESSION['logged']) && $_SESSION['logged'];
 require_once(__DIR__.'/controlleur/usagers.php');
 require_once(__DIR__.'/controlleur/medecins.php');
